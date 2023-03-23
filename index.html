@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Climath</title>
+</head>
+<body onload="start()">
+
+    <main >
+        <div class="containerLoad">
+            <div class="loader">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+                <div class="bar4"></div>
+                <div class="bar5"></div>
+                <div class="bar6"></div>
+                <div class="bar7"></div>
+                <div class="bar8"></div>
+                <div class="bar9"></div>
+                <div class="bar10"></div>
+                <div class="bar11"></div>
+                <div class="bar12"></div>
+            </div>
+        </div>
+        <div class="init">
+            <div class="left-size">
+                <img class="big-ilus" src="./assets/img/initial-ilustration.png" alt="ilustration">
+            </div>
+            <div class="rigth-size">
+                <img class="small-ilus" src="./assets/img/initial-ilustration.png" alt="ilustration">
+                <h1>Climath</h1>
+                <span>Weather App</span>
+                <button class="btn-start">Iniciar</button> 
+            </div>
+            <div class="warningLocationUser">
+                <div class="boxWarning">
+                    
+                    <p>Para continuar, forneça sua localização...</p>
+                    <div class="containerButtons">
+                        <button class="confirmLocation">Continuar</button>
+                        <button class="deniedLocation">Visualizar no modo estático</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="header">
+            <img class="header-ilus" src="./assets/img/initial-ilustration.png" alt="ilustration">
+            <div class="option weather">
+                <i class="iconHeader fa-solid fa-cloud-sun-rain"></i>
+                <span>Weather</span>
+            </div>
+            <div class="option cities">
+                <i class="iconHeader fa-solid fa-list"></i>
+                <span>Cities</span>
+            </div>
+            <div class="option map">
+                <i class="iconHeader fa-solid fa-map"></i>
+                <span>Map</span>
+            </div>
+            <div class="option settings">
+                <i class="iconHeader fa-solid fa-sliders"></i>
+                <span>Settings</span>
+            </div>
+        </div>
+        <div class="weatherComponent">
+            <div class="bar">Baseado na sua localização</div>
+            <div class=" chance-Of-Rain">
+                <div class="info-city">
+                    <h2>Madrid</h2>
+                    <span>chance de chuva: 0%</span>
+                </div>
+                
+                <h2 class="graus">31°</h2>
+                <div class="sun">
+                    <img src="./assets/img/ilustraçãoSol.png" alt="imagem sol">
+                </div>
+                
+            </div>
+            <div class=" today-forecast">
+                <h3>Previsão de hoje</h3>
+                <div class="grid-previsao">
+                        <div class="box-hours six-am">
+                            <span>6:00 AM</span>
+                            <img class="icon-pre-rain" src="./assets/img/tornado.png" alt="tornado">
+                            <span>25°</span>
+                        </div>
+                        <div class="box-hours nine">
+                            <span>9:00 AM</span>
+                            <img class="icon-pre-rain" src="./assets/img/tornado.png" alt="tornado">
+                            <span>35°</span>
+                        </div>
+                        <div class="box-hours twelve">
+                            <span>12:00 AM</span>
+                            <img class="icon-pre-rain" src="./assets/img/tornado.png" alt="tornado">
+                            <span>30°</span>
+                        </div>
+                        <div class="box-hours three">
+                            <span>3:00 PM</span>
+                            <img class="icon-pre-rain" src="./assets/img/tornado.png" alt="tornado">
+                            <span>30°</span>
+                        </div>
+                        <div class="box-hours six-pm">
+                            <span>6:00 PM</span>
+                            <img class="icon-pre-rain" src="./assets/img/tornado.png" alt="tornado">
+                            <span>27°</span>
+                        </div>
+                        <div class="box-hours nine-pm">
+                            <span>9:00 PM</span>
+                            <img class="icon-pre-rain" src="./assets/img/tornado.png" alt="tornado">
+                            <span>22°</span>
+                        </div>
+                </div>  
+            </div>
+            <div class=" air-conditions">
+                <h3>Condições do ar</h3>
+                <i class="fa-solid fa-cloud"></i>
+                <div class="container-info-air">
+                    <div class="real-feel"> 
+                        <span>Sensação termica</span>
+                        <span >30%</span>
+                    </div>
+                    <div class="wind"> 
+                        <span>velocidade do vento</span>
+                        <span>0.20km/h</span>
+                    </div>
+                    <div class="chance-of-rain"> 
+                        <span>Chance de chuver</span>
+                        <span>30%</span>
+                    </div>
+                    <div class="uv-index"> 
+                        <span>Indice uv</span>
+                        <span>3</span>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class=" weekforecast">
+                <div class="today">
+
+                    <div class="dia">
+                        Hoje
+                    </div>
+
+                    <div class="clima">
+                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                        <span>Tempestade</span>
+                    </div>
+                    
+                    <div class="data">
+                        01/03
+                    </div>
+
+                </div>
+                <div class="tuesday">
+
+                    <div class="dia">
+                        terça
+                    </div>
+
+                    <div class="clima">
+                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                        <span>Sunday</span>
+                    </div>
+
+                    <div class="data">
+                        01/03
+                    </div>
+
+                </div>
+                <div class="wed">
+
+                    <div class="dia">
+                        Quarta
+                    </div>
+
+                    <div class="clima">
+                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                        <span>Sunday</span>
+                    </div>
+
+                    <div class="data">
+                        01/03
+                    </div>
+
+                </div>
+                <div class="thu">
+
+                    <div class="dia">
+                        Quinta
+                    </div>
+
+                    <div class="clima">
+                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                        <span>Sunday</span>
+                    </div>
+
+                    <div class="data">
+                        01/03
+                    </div>
+
+                </div>
+
+                <div class="fri">
+
+                    <div class="dia">
+                        Sexta
+                    </div>
+
+                    <div class="clima">
+                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                        <span>Sunday</span>
+                    </div>
+
+                    <div class="data">
+                        01/03
+                    </div>
+
+                </div>
+                <div class="sat">
+
+                    <div class="dia">
+                        Sábado
+                    </div>
+
+                    <div class="clima">
+                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                        <span>Sunday</span>
+                    </div>
+
+                    <div class="data">
+                        01/03
+                    </div>
+
+                </div>
+                <div class="sunday">
+
+                    <div class="dia">
+                        Domingo
+                    </div>
+
+                    <div class="clima">
+                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                        <span>Sunday</span>
+                    </div>
+
+                    <div class="data">
+                        01/03
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="./assets/index.js"></script>
+</body>
+</html>

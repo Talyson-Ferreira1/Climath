@@ -1,0 +1,925 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+:root
+{
+
+    /* --------- Z-index --------- */
+    --z_load:3;
+    --z_header:2;
+    --z_component:1;
+
+    /* --------- Colors --------- */
+    --backgroun-dark:#0b131e;
+    --backgroun-shadow:#050e17;
+    --background-light:#ffffff2b;
+    --blue:#0095ff;
+    --font-color:rgba(255, 255, 255,0.8);
+
+    /* --------- Fonts --------- */
+    --font-poppins: 'Poppins', sans-serif;
+    --font-roboto: 'Roboto', sans-serif;
+
+
+}
+
+
+
+
+/* ---------------------- BASE ----------------------   */
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+html
+{
+    scroll-behavior: smooth;
+}
+body
+{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    background:var(--backgroun-dark) ;
+    scroll-behavior: smooth;
+}
+body::-webkit-scrollbar 
+{
+    width: 5px;
+}
+body::-webkit-scrollbar-track 
+{
+    background-color: var( --background-light);
+}
+body::-webkit-scrollbar-thumb 
+{
+    background-color: var( --backgroun-dark);
+    border-radius: 5px;
+}
+/* ---------------------- cod ----------------------   */
+main
+{
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 2rem;
+    overflow: hidden;
+}
+
+/* ---------------------- Loader ----------------------   */
+.containerLoad
+{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s;
+}
+.loader {
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    margin: 0 40%;
+    border-radius: 10px;
+}
+.loader div {
+    width: 8%;
+    height: 24%;
+    background: rgb(128, 128, 128);
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    opacity: 0;
+    border-radius: 50px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    animation: fade458 1s linear infinite;
+} 
+@keyframes fade458 {
+    from {
+      opacity: 1;
+    }
+  
+    to {
+      opacity: 0.25;
+    }
+}
+  
+.loader .bar1 {
+    transform: rotate(0deg) translate(0, -130%);
+    animation-delay: 0s;
+} 
+.loader .bar2 {
+    transform: rotate(30deg) translate(0, -130%);
+    animation-delay: -1.1s;
+} 
+.loader .bar3 {
+    transform: rotate(60deg) translate(0, -130%);
+    animation-delay: -1s;
+} 
+.loader .bar4 {
+    transform: rotate(90deg) translate(0, -130%);
+    animation-delay: -0.9s;
+}
+.loader .bar5 {
+    transform: rotate(120deg) translate(0, -130%);
+    animation-delay: -0.8s;
+}
+.loader .bar6 {
+    transform: rotate(150deg) translate(0, -130%);
+    animation-delay: -0.7s;
+}
+.loader .bar7 {
+    transform: rotate(180deg) translate(0, -130%);
+    animation-delay: -0.6s;
+}
+.loader .bar8 {
+    transform: rotate(210deg) translate(0, -130%);
+    animation-delay: -0.5s;
+}
+.loader .bar9 {
+    transform: rotate(240deg) translate(0, -130%);
+    animation-delay: -0.4s;
+} 
+.loader .bar10 {
+    transform: rotate(270deg) translate(0, -130%);
+    animation-delay: -0.3s;
+}
+.loader .bar11 {
+    transform: rotate(300deg) translate(0, -130%);
+    animation-delay: -0.2s;
+}
+.loader .bar12 {
+    transform: rotate(330deg) translate(0, -130%);
+    animation-delay: -0.1s;
+}
+  
+/* ---------------------- Header ----------------------   */
+
+.header
+{
+    position: absolute;
+    top: 50%;
+    opacity: 0;
+    left: 0;
+    margin:0 2rem;
+    transform: translateY(-50%);
+    background: var(--background-light);
+    border-radius: 20px;
+    width: 5rem;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 3rem;
+    gap: 3rem;
+}
+.header-ilus
+{
+    width: 2rem;
+}
+.weather,.cities,.map,.settings
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: .3rem;
+    opacity: .7;
+}
+.iconHeader
+{
+    color: white;
+    font-size: 1em;
+}
+.option span
+{
+    color: white;
+    font-size: .8em;
+}
+
+/* ---------------------- first-component ----------------------   */
+.init
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100%;
+    position: absolute;
+    z-index: var(--z_component);
+
+}
+.left-size
+{
+    width: 50%;
+    height: 90%;
+    background: var(--background-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    margin: 2rem;
+}
+
+.rigth-size
+{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: .5rem;
+}
+.small-ilus
+{
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+
+}
+.rigth-size h1
+{
+    color: white;
+    font-size: 3.5em;
+    font-weight: 800;
+    font-family: var(--font-poppins);
+}
+.rigth-size span
+{
+    color: rgba(255, 255, 255, 0.672);
+    font-size: 1em;
+    letter-spacing: 1px;
+}
+.btn-start
+{
+    width: 8rem;
+    height: 2.5rem;
+    border-radius: 20px;
+    background: var(--blue);
+    border: none;
+    outline: none;
+    margin-top:3rem ;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: var(--font-poppins);
+    font-weight: 700;
+}
+.btn-start:hover
+{
+    transform: scale(1.05);
+}
+
+.warningLocationUser
+{
+    position: absolute;
+    z-index: var(--z_load);
+    width: 100vw;
+    height: 200%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff2c;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+.boxWarning
+{
+    width: auto;
+    padding: 2rem 3rem;
+    background: rgb(42, 42, 42);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+
+}
+.containerButtons {
+
+    display: flex;
+    align-items:center ;
+    justify-content: space-around;
+    width: 100%;
+
+}
+.confirmLocation, .deniedLocation {
+    color: black;
+    font-size: 1em;
+    font-weight: 500;
+    padding: 1rem 2rem;
+    background: var(--blue);
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+.confirmLocation:hover, .deniedLocation:hover{
+    transform: scale(.98);
+    opacity: 1;
+}
+.deniedLocation {
+    opacity: 0;
+    display: none;
+    transition: all .5s;
+}
+/* ---------------------- secund-component ----------------------   */
+.weatherComponent
+{
+    width: 85%;
+    height: 90%;
+    position: absolute;
+    display: grid;
+    opacity: 0;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 2fr 2fr 3fr;
+    right: 0;
+    margin: 1rem;
+    gap: 1rem;
+}
+.bar
+{
+    width: 100%;
+    height: 100%;
+    grid-column:1 ;
+    grid-row: 1;
+    border-radius: 10px;
+    background: var(--background-light);
+    display: flex;
+    align-items: center;
+    padding:1rem 2rem;
+}
+
+.chance-Of-Rain
+{
+    grid-column:1 ;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+   
+}
+.info-city
+{
+    grid-column: 1/span 2;
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 2rem;
+}
+.info-city h2
+{
+    font-size: 2em ;
+}
+.info-city span
+{
+    font-size: .7em ;
+    color: var(--font-color);
+    font-weight: 300;
+}
+.graus
+{
+    grid-column: 1/span 2;
+    grid-row: 2;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    font-size: 4em;
+}
+.sun
+{
+    grid-column: 3;
+    grid-row: 1/span 2;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+.sun img
+{
+    width: 30rem;
+}
+
+.today-forecast
+{
+    background: var(--background-light);
+    grid-column:1 ;
+    grid-row: 3;
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+.today-forecast h3
+{
+    font-size: .7em;
+    color: var(--font-color);
+    font-weight: 300;
+    position: absolute;
+    top: .5rem;
+    left: 2rem;
+    width: 100%;
+}
+.today-forecast .grid-previsao
+{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr;
+    height: 70%;
+    width: 100%;
+    justify-content: space-around;
+
+}
+.grid-previsao .box-hours
+{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    border-right: 1px solid #ffffff16;
+}
+.box-hours span
+{
+    color: var(--font-color);
+    font-weight: 300;
+}
+.box-hours span:last-child
+{
+    font-size: 1em;
+    font-weight: 800;
+    color: white;
+}
+.box-hours img
+{
+    width: 27%;
+}
+.grid-previsao .box-hours:last-child
+{
+    border: none;
+}
+
+.air-conditions
+{
+    background: var(--background-light);
+    grid-column:1 ;
+    grid-row: 4;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 5fr;
+}
+.air-conditions h3
+{
+    font-size: .8em;
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    grid-column: 1;
+    grid-row: 1;
+    color: var(--font-color);
+    font-weight: 300;
+}
+.air-conditions .fa-cloud
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 1rem;
+    grid-column: 2;
+    grid-row: 1;
+    width: 6rem;
+    height: 2rem;
+}
+.container-info-air
+{
+    grid-column: 1/span 2;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows:1fr 1fr ;
+}
+.real-feel,.wind,.chance-of-rain,.uv-index
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+    gap:.5rem;
+}
+.real-feel span:nth-child(1),
+.wind span:nth-child(1),
+.chance-of-rain span:nth-child(1),
+.uv-index span:nth-child(1)
+{
+    font-size: .8em;
+    color: var(--font-color);
+    font-weight: 300;
+}
+.real-feel  span:nth-child(1)::before
+{
+    padding-right: .5rem;
+    content: "\f2c9";
+    font-family: fontAwesome;
+}
+.wind span:nth-child(1)::before
+{
+    padding-right: .5rem;
+    content: "\f72e";
+    font-family: fontAwesome;
+}
+.chance-of-rain span:nth-child(1)::before
+{
+    padding-right: .5rem;
+    content: "\f043";
+    font-family: fontAwesome;
+}
+.uv-index span:nth-child(1)::before
+{
+    padding-right: .5rem;
+    content: "\f185";
+    font-family: fontAwesome;
+}
+.real-feel span:nth-child(2),
+.wind span:nth-child(2),
+.chance-of-rain span:nth-child(2),
+.uv-index span:nth-child(2)
+{
+
+    font-size: 1.5em;
+    font-weight: 800;
+    opacity: .7;
+    padding-left: 2rem;
+}
+
+.weekforecast
+{
+    background: var(--background-light);
+    grid-column:2 ;
+    grid-row: 1 /span 4;
+    border-radius: 10px;
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-columns:100%;
+    
+}
+.today
+{ 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column:1 ;
+    grid-row: 1;
+}
+.tuesday
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column:1 ;
+    grid-row: 2;
+}
+.wed
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column:1 ;
+    grid-row: 3;
+}
+.thu
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column:1 ;
+    grid-row: 4;
+}
+.fri
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column:1 ;
+    grid-row: 5;
+}
+.sat
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column:1 ;
+    grid-row: 6;
+}
+.sunday
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column:1 ;
+    grid-row: 7;
+}
+.weekforecast .dia
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: calc(100% / 3) ;
+}
+.weekforecast .clima  
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: calc(100% / 3) ;
+    overflow: hidden;
+}
+.weekforecast .clima img
+{
+    width: 40%;
+}
+.weekforecast .clima span
+{
+    padding: 0 0 0 .5rem;
+    font-size: .8em;
+}
+.weekforecast .data
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: calc(100% / 3) ;
+    overflow: hidden;
+}
+
+/* ---------------------- third-component ----------------------   */
+
+
+/* -------------------- Mediaquery -------------------- */
+@media(max-width:768px){
+    /* tablets */
+
+/* ---------------------- BASE ----------------------   */
+
+    body
+    {
+
+        height: 200vh;
+    }
+    main
+    {
+        width: 100vw;
+        max-height:200vh;
+        padding: 3rem 1rem;
+        height: 200vh;
+
+    }
+/* ---------------------- Header ----------------------   */
+
+    .header
+    {
+        z-index: var(--z_header);
+        width: 100%;
+        height: 4rem;
+        padding: 0;
+        justify-content: center;
+        flex-direction: row;
+        gap: 4rem;
+        margin: 0;
+        position: fixed;
+        transform: translateY(0);
+        top: calc(100% - 4rem);
+        backdrop-filter: blur(10px);
+        border-radius: 0px;
+    }
+    .header-ilus
+    {
+
+        display: none;
+    }
+    .weather,.cities,.map,.settings
+    {
+        flex-direction: row;
+    }
+  
+
+
+/* ------------ first-component ------------ */
+    .left-size
+    {
+        display: none;
+    }
+    .rigth-size
+    {
+        width: 100%;
+    }
+    .small-ilus
+    {
+        width: 12rem;
+        height: 12rem;
+        margin-bottom: 4rem;
+    }
+
+/* ------------ secund-component ------------ */
+    .weatherComponent
+    {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        grid-template-columns: 100%;
+        grid-template-rows: .5fr 2.5fr 2fr 3fr 2.5fr ;
+        margin: 1rem 1rem 4rem 1rem;
+        gap: 1.5rem;
+        padding: 0;
+    }
+
+    .bar
+    {
+        width: 100%;
+        height: 3rem;
+        grid-column:1 ;
+        grid-row: 1;
+        border-radius: 10px;
+        background: var(--background-light);
+        display: flex;
+        align-items: center;
+        padding:.5rem 2rem;
+    }
+
+    .chance-Of-Rain
+    {
+        grid-column:1 ;
+        grid-row: 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    
+    }
+    .chance-Of-Rain .info-city {
+
+        grid-column:1 ;
+        grid-row: 1;
+
+    }
+    .info-city h2
+    {
+        font-size: 3em ;
+    }
+    .info-city span
+    {
+        font-size: .9em ;
+    }
+    .chance-Of-Rain .graus {
+
+        grid-column:1 ;
+        grid-row: 2;
+        
+    }
+    .sun
+    {
+        grid-column: 2;
+        grid-row: 1 /span 2;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .today-forecast
+    {
+        background: var(--background-light);
+        grid-column:1 ;
+        grid-row: 3;
+        border-radius: 10px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+    }
+    .today-forecast h3
+    {
+        font-size: .8em;
+        font-weight: 500;
+        top: 1rem;
+    }
+    .grid-previsao
+    {
+        height: 80%;
+    }
+    .box-hours span
+    {
+        font-size: .8em;
+    }
+    .box-hours img
+    {
+        width: 40%;
+    }
+
+    .weekforecast
+    {
+        grid-column:1 ;
+        grid-row: 4;
+    }
+    .weekforecast .dia
+    {
+        justify-content: flex-start;
+        padding: 1rem;
+    }
+    .weekforecast .clima img
+    {
+        width:auto;
+        height: 50%;
+    }
+    .weekforecast .clima span
+    {
+        padding: 0 0 0 .5rem;
+        font-size: .8em;
+        width:50%;
+    }
+    .today,.tuesday,.wed,.thu,
+    .fri,.sat,.sunday
+    {
+        height: 5rem;
+    }
+
+    .air-conditions
+    {
+        grid-row: 5;
+    }
+    .air-conditions .fa-cloud
+    {
+        opacity: 0;
+    }
+    .air-conditions h3
+    {
+        font-size: .8em;
+        font-weight: 800;
+        padding: 1rem 0 0 2rem;
+    }
+    .real-feel,.wind,
+    .chance-of-rain,.uv-index
+    {
+        padding: 0 0 0 2rem;
+    }
+
+
+
+
+
+
+
+
+}  
+@media(max-width:576px){
+    /* phones */
+
+/* ------------ first-component ------------ */
+
+    .small-ilus
+    {
+        width: 10rem;
+        height: 10rem;
+        margin-bottom: 4rem;
+    }
+    .rigth-size h1
+    {
+        font-size: 4em;
+    }   
+    .btn-start
+    {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+    }
+    .btn-start::before
+    {
+        content: "\f061";
+        font-family: fontAwesome;
+        color: white;
+    }
+
+}
