@@ -31,21 +31,38 @@ var weather = navBar.children[1].children[1],
     map = navBar.children[3].children[1],
     settings =navBar.children[4].children[1];
 
-var clima = {
-    riscoDeChuva: `<img src="./assets/img/risco de chuva.png" alt="Tempestade">`,
-    ensolarado :`<img src="./assets/img/sun2.png" alt="Ensolarado"> `,
-    nublado: ` <img src="./assets/img/nublado.png" alt="Nublado">`,
-    chuvoso: `<img src="./assets/img/chuva.png" alt="Chuvoso">`,
-    tempestade: `<img src="./assets/img/tempestade.png" alt="Tempestade">`,
-    nebulado : `<img src="./assets/img/nebulado.png" alt="Nebuloso">`,
-} 
+var descricaoClima = {
+    
+    "clear sky":            `./assets/img/ensolarado.png`,
+    "few clouds":           `./assets/img/ensolarado.png`,
+    "scattered clouds":     `./assets/img/nuvens-esparças.png`, 
+    "broken clouds":        `./assets/img/parcialmente-nublado.png`,
+    "overcast clouds":      `./assets/img/parcialmente-nublado-.png`,
+    "light rain":           `./assets/img/chuva-leve-1.png`,
+    "moderate rain":        `./assets/img/chuva-leve-2.png`,
+    "heavy intensity rain": `./assets/img/chuva-pesada-3.png`,
+    "very heavy rain":      `./assets/img/chuva-intensa-4.png`,
+    "extreme rain":         `./assets/img/chuva-torrencial-5.png`,
+    "thunderstorm":         `./assets/img/storm.png`,
+    "snow":                 `./assets/img/neve.png`,
+    "mix snow/rain":        `./assets/img/chuva-com-neve.png`,
+    "mist":                 `./assets/img/nevoa.png`,
+    "haze":                 `./assets/img/fumaça.png`,
+    "smoke":                `./assets/img/nevoa.png`,
+    "dust":                 `./assets/img/poeira.png`,
+    "sand":                 `./assets/img/sand.png`,
+    "volcanic ash":         `./assets/img/cinzas-vulcão.png`,
+    "squalls":              `./assets/img/clima-ventoso.png`,
+    "tornado":              `./assets/img/tornado.png`
+
+};
 
 
 btnConfirmLocation.addEventListener('click', checkPermission)
 btnStart.addEventListener('click', showWarning)
 btnDeniedLocation.addEventListener('click', ()=>{
-    toggleTab(InitScreen,weatherComponent,true)
 
+    toggleTab(InitScreen,weatherComponent,true)
 
 })
 phoneScreen.addEventListener('change', event => {
@@ -83,7 +100,7 @@ function start() {
 function checkPermission() {
    if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-    // o acesso à localização foi concedido
+    // confirm
 
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
@@ -93,11 +110,8 @@ function checkPermission() {
         makeRequisitionCity()
         makeRequisitionForecast()
         
-
-       
-        
     }, function(error) {
-        // o acesso à localização foi negado ou houve um erro
+        // denied
 
             if (error.code === 1) {
 
@@ -109,14 +123,19 @@ function checkPermission() {
 
             } else if (error.code === 2) {
 
-                console.log("Não foi possível obter a localização.");
+                alert("Não foi possível obter sua localização, visualiza no modo estático");
 
             }
         });
 
     } else {
-        console.log("Geolocation is not supported by this browser.");
+        alert("Seu navegador não suporta geolocalização.");
     }
+}
+function showWarning() {
+
+    warning.style.display= "flex";
+
 }
 function toggleTab(currentTab,newTab,showheader){
 
@@ -134,17 +153,8 @@ function toggleTab(currentTab,newTab,showheader){
             warning.style.display="none" 
             navBar.style.display="flex"
         }
-    },2000)
-
+    },500)
    
-        
-
-    
-}
-function showWarning() {
-
-    warning.style.display= "flex";
-
 }
 function getLocation() {
 
@@ -183,7 +193,7 @@ async function makeRequisitionWeather(city) {
 
 }
 function dataProcessingWeather(data){
-    console.log(data)
+
 
     nameCityData = data.name;
     temperatureData = parseInt(data.main.temp)
@@ -193,16 +203,6 @@ function dataProcessingWeather(data){
     windSpeedData = data.wind.speed;
     AirUmidityData = data.main.humidity;
     visibilityData = data.visibility;
-
-    console.log(nameCityData)
-    console.log(temperatureData)
-    console.log(climate)
-    console.log(thermalSensationData)
-    console.log(windSpeedData)
-    console.log(AirUmidityData)
-    console.log(visibilityData)
-
-
 
     async function changeValuesDisplay(){
         
@@ -238,9 +238,10 @@ async function  makeRequisitionForecast(){
 
     
     dataProcessingForecast(resposta)
+    dataProcessing5DaysForecast(resposta)
     
 }
-async function dataProcessingForecast(resposta) {
+async function dataProcessingForecast(resposta){
 
     const dados = await resposta;
 
@@ -251,32 +252,6 @@ async function dataProcessingForecast(resposta) {
     forecastHours.sixPm = dados.list[5].weather[0].description;
     forecastHours.ninePm = dados.list[6].weather[0].description;
 
-
-    const descricaoClima = {
-    
-        "clear sky":            `./assets/img/ensolarado.png`,
-        "few clouds":           `./assets/img/ensolarado.png`,
-        "scattered clouds":     `./assets/img/nuvens-esparças.png`,
-        "broken clouds":        `./assets/img/nublado.png`,
-        "overcast clouds":      `./assets/img/parcialmente-nublado-.png`,
-        "light rain":           `./assets/img/chuva-leve-1.png`,
-        "moderate rain":        `./assets/img/chuva-leve-2.png`,
-        "heavy intensity rain": `./assets/img/chuva-pesada-3.png`,
-        "very heavy rain":      `./assets/img/chuva-intensa-4.png`,
-        "extreme rain":         `./assets/img/chuva-torrencial-5.png`,
-        "thunderstorm":         `./assets/img/storm.png`,
-        "snow":                 `./assets/img/neve.png`,
-        "mix snow/rain":        `./assets/img/chuva-com-neve.png`,
-        "mist":                 `./assets/img/nevoa.png`,
-        "haze":                 `./assets/img/fumaça.png`,
-        "smoke":                `./assets/img/nevoa.png`,
-        "dust":                 `./assets/img/poeira.png`,
-        "sand":                 `./assets/img/sand.png`,
-        "volcanic ash":         `./assets/img/cinzas-vulcão.png`,
-        "squalls":              `./assets/img/clima-ventoso.png`,
-        "tornado":              `./assets/img/tornado.png`
-
-    };
     
     for (const chave in forecastHours) {
         for (const descricao in descricaoClima) {
@@ -309,4 +284,151 @@ async function dataProcessingForecast(resposta) {
     changeForecastDisplay()
    
 }
+async function dataProcessing5DaysForecast(resposta) {
 
+    await resposta;
+  
+    function separateDaysFromTheList(){
+
+        const dailyAverages = {};
+    
+        dias = {
+        dia1: { index1: 0, index2: 5 },
+        dia2: { index1: 6, index2: 13 },
+        dia3: { index1: 14, index2: 21 },
+        dia4: { index1: 22, index2: 29 },
+        dia5: { index1: 30, index2: 37 },
+        };
+    
+        Object.keys(dias).forEach((el) => {
+        let i = dias[el].index1;
+        let j = dias[el].index2;
+    
+        let index = 0;
+    
+        for (let chave in resposta.list) {
+            if (index >= i && index < j) {
+            const dayData = resposta.list[chave];
+            const date = dayData.dt_txt.split(" ")[0];
+            const minTemp = dayData.main.temp_min;
+            const maxTemp = dayData.main.temp_max;
+            const dailyAverage = (minTemp + maxTemp) / 2;
+    
+            if (!dailyAverages[el]) {
+                dailyAverages[el] = [];
+            }
+    
+            let dia = { date, dailyAverage };
+    
+            dailyAverages[el].push(dia);
+            }
+    
+            index++;
+        }
+        });
+
+        return dailyAverages
+
+    }
+
+    function createDailyAverage() {
+
+        const dailyAverages = separateDaysFromTheList();
+        const dailyAverageObj = {};
+
+        Object.keys(dailyAverages).forEach((el) => {
+            let sum = 0;
+
+            dailyAverages[el].forEach((day) => {
+                sum += day.dailyAverage;
+            });
+
+            const avg = sum / dailyAverages[el].length;
+
+            dailyAverageObj[el] = {
+                date: dailyAverages[el][0].date,
+                average: avg.toFixed(2),
+            };
+        });
+
+        return dailyAverageObj;
+    }
+    
+    changeForecastFiveDays(createDailyAverage()) 
+}
+
+async function changeForecastFiveDays(resposta){
+
+    await resposta
+
+    const parentElementCards = document.querySelector(".containerHours")
+
+    function removeList(){
+        const hoursList = document.querySelectorAll('.hours');
+
+        hoursList.forEach(hour => {
+        hour.remove();
+        });
+
+    }
+
+
+    function ConvertValues(){
+        
+        //converte para dias da semana       
+        obj = resposta
+        var weekdays = {};
+        const daysOfWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+        
+        for (let chave in obj) {
+            const data = new Date(obj[chave].date);
+            const diaDaSemana = daysOfWeek[data.getDay()];
+            
+            weekdays[chave] = diaDaSemana;
+        }
+        console.log(weekdays)
+        
+        //converte  para dois digitos
+        var dataForm = {};
+
+        Object.keys(resposta).forEach((el) =>  {
+          const data = new Date(resposta[el].date);
+          const dia = data.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'});
+          dataForm[el] = dia;
+        });
+        console.log(dataForm)
+
+
+        let card1 = `<div class="hours ">
+    
+                            <div class="dia">
+                                ${weekdays.dia1}
+                            </div>
+    
+                            <div class="clima">
+                                <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                                <span>Tempestade</span>
+                            </div>
+                            
+                            <div class="data">
+                                ${dataForm.dia1}
+                            </div>
+    
+                        </div>` 
+
+
+
+
+
+
+
+
+        parentElementCards.innerHTML = card1
+
+    }
+   
+    ConvertValues()
+
+    removeList()
+   
+}

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./assets/style.css">
     <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <title>Climath</title>
 </head>
 <body onload="start()">
@@ -77,7 +78,7 @@
                     <h3 class="climateCity">Ensolarado</h3>
                 </div>
                 
-                <h2 class="graus">31°</h2>
+                <h2 class="graus">25°</h2>
                 <div class="sun">
                     <img src="./assets/img/ilustraçãoSol.png" alt="imagem sol">
                 </div>
@@ -88,32 +89,32 @@
                 <div class="grid-previsao">
                         <div class="box-hours six-am">
                             <span>6:00 AM</span>
-                            <img class="icon-pre-rain imgSixAm" src="./assets/img/tornado.png" alt="tornado">
+                            <img class="icon-pre-rain imgSixAm" src="./assets/img/chuva-leve-2.png" alt="tornado">
                             <span>25°</span>
                         </div>
                         <div class="box-hours nine">
                             <span>9:00 AM</span>
-                            <img class="icon-pre-rain imgNineAm" src="./assets/img/tornado.png" alt="tornado">
+                            <img class="icon-pre-rain imgNineAm" src="./assets/img/ensolarado.png" alt="tornado">
                             <span>35°</span>
                         </div>
                         <div class="box-hours twelve">
                             <span>12:00 AM</span>
-                            <img class="icon-pre-rain imgTwelveAm" src="./assets/img/tornado.png" alt="tornado">
+                            <img class="icon-pre-rain imgTwelveAm" src="./assets/img/nuvens-esparças.png" alt="tornado">
                             <span>30°</span>
                         </div>
                         <div class="box-hours three">
                             <span>3:00 PM</span>
-                            <img class="icon-pre-rain imgThreePm" src="./assets/img/tornado.png" alt="tornado">
+                            <img class="icon-pre-rain imgThreePm" src="./assets/img/clima-ventoso.png" alt="tornado">
                             <span>30°</span>
                         </div>
                         <div class="box-hours six-pm">
                             <span>6:00 PM</span>
-                            <img class="icon-pre-rain imgSixPm" src="./assets/img/tornado.png" alt="tornado">
+                            <img class="icon-pre-rain imgSixPm" src="./assets/img/chuva-forte-6.png" alt="tornado">
                             <span>27°</span>
                         </div>
                         <div class="box-hours nine-pm">
                             <span>9:00 PM</span>
-                            <img class="icon-pre-rain imgNinePm" src="./assets/img/tornado.png" alt="tornado">
+                            <img class="icon-pre-rain imgNinePm" src="./assets/img/storm.png" alt="tornado">
                             <span>22°</span>
                         </div>
                 </div>  
@@ -124,7 +125,7 @@
                 <div class="container-info-air">
                     <div class="real-feel"> 
                         <span>Sensação termica</span>
-                        <span class="sensacao-termica">30%</span>
+                        <span class="sensacao-termica">29°</span>
                     </div>
                     <div class="wind"> 
                         <span>velocidade do vento</span>
@@ -136,130 +137,106 @@
                     </div>
                     <div class="uv-index"> 
                         <span>Visibilidade</span>
-                        <span class="Visibilidade">3</span>
+                        <span class="Visibilidade">10000</span>
                         
                     </div>
                 </div>
             </div>
             <div class=" weekforecast">
-                <div class="today">
+                <h2>Previsão de cinco dias</h2>
+                <div class="containerHours">
 
-                    <div class="dia">
-                        Hoje
+                    <div class="hours ">
+
+                        <div class="dia">
+                            Hoje
+                        </div>
+
+                        <div class="clima">
+                            <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                            <span>Tempestade</span>
+                        </div>
+                        
+                        <div class="data">
+                            01/03
+                        </div>
+
                     </div>
+                    <div class="hours">
 
-                    <div class="clima">
-                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
-                        <span>Tempestade</span>
+                        <div class="dia">
+                            terça
+                        </div>
+
+                        <div class="clima">
+                            <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                            <span>Sunday</span>
+                        </div>
+
+                        <div class="data">
+                            01/03
+                        </div>
+
+                    </div>
+                    <div class="hours">
+
+                        <div class="dia">
+                            Quarta
+                        </div>
+
+                        <div class="clima">
+                            <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                            <span>Sunday</span>
+                        </div>
+
+                        <div class="data">
+                            01/03
+                        </div>
+
+                    </div>
+                    <div class="hours">
+
+                        <div class="dia">
+                            Quinta
+                        </div>
+
+                        <div class="clima">
+                            <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                            <span>Sunday</span>
+                        </div>
+
+                        <div class="data">
+                            01/03
+                        </div>
+
+                    </div>
+                    <div class="hours">
+
+                        <div class="dia">
+                            Sexta
+                        </div>
+
+                        <div class="clima">
+                            <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+                            <span>Sunday</span>
+                        </div>
+
+                        <div class="data">
+                            01/03
+                        </div>
+
                     </div>
                     
-                    <div class="data">
-                        01/03
-                    </div>
 
                 </div>
-                <div class="tuesday">
-
-                    <div class="dia">
-                        terça
-                    </div>
-
-                    <div class="clima">
-                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
-                        <span>Sunday</span>
-                    </div>
-
-                    <div class="data">
-                        01/03
-                    </div>
-
-                </div>
-                <div class="wed">
-
-                    <div class="dia">
-                        Quarta
-                    </div>
-
-                    <div class="clima">
-                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
-                        <span>Sunday</span>
-                    </div>
-
-                    <div class="data">
-                        01/03
-                    </div>
-
-                </div>
-                <div class="thu">
-
-                    <div class="dia">
-                        Quinta
-                    </div>
-
-                    <div class="clima">
-                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
-                        <span>Sunday</span>
-                    </div>
-
-                    <div class="data">
-                        01/03
-                    </div>
-
-                </div>
-
-                <div class="fri">
-
-                    <div class="dia">
-                        Sexta
-                    </div>
-
-                    <div class="clima">
-                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
-                        <span>Sunday</span>
-                    </div>
-
-                    <div class="data">
-                        01/03
-                    </div>
-
-                </div>
-                <div class="sat">
-
-                    <div class="dia">
-                        Sábado
-                    </div>
-
-                    <div class="clima">
-                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
-                        <span>Sunday</span>
-                    </div>
-
-                    <div class="data">
-                        01/03
-                    </div>
-
-                </div>
-                <div class="sunday">
-
-                    <div class="dia">
-                        Domingo
-                    </div>
-
-                    <div class="clima">
-                        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
-                        <span>Sunday</span>
-                    </div>
-
-                    <div class="data">
-                        01/03
-                    </div>
-
-                </div>
+                
             </div>
         </div>
 
     </main>
 
     <script src="./assets/index.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
 </body>
 </html>

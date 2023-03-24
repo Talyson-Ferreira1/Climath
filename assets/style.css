@@ -11,7 +11,7 @@
     /* --------- Colors --------- */
     --backgroun-dark:#0b131e;
     --backgroun-shadow:#050e17;
-    --background-light:#ffffff2b;
+    --background-light:#ffffff17;
     --blue:#0095ff;
     --font-color:rgba(255, 255, 255,0.8);
 
@@ -184,10 +184,16 @@ main
     flex-direction: column;
     padding: 3rem;
     gap: 3rem;
+    animation: slide-right .5s alternate;
+    z-index: var(--z_header);
 }
 .header-ilus
 {
     width: 2rem;
+}
+.option
+{
+   cursor: pointer;
 }
 .weather,.cities,.map,.settings
 {
@@ -340,7 +346,7 @@ main
 /* ---------------------- secund-component ----------------------   */
 .weatherComponent
 {
-    width: 85%;
+    width: 100%;
     height: 90%;
     position: absolute;
     display: none;
@@ -348,8 +354,10 @@ main
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr 2fr 2fr 3fr;
     right: 0;
-    margin: 1rem;
+    margin: 1rem ;
+    padding-left: 10rem;
     gap: 1rem;
+    z-index: var(--z_component);
 }
 .bar
 {
@@ -362,6 +370,7 @@ main
     display: flex;
     align-items: center;
     padding:1rem 2rem;
+    animation: slide-bottom .5s alternate;
 }
 
 .chance-Of-Rain
@@ -371,6 +380,7 @@ main
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr 1fr;
+    animation: slide-up .5s alternate;
    
 }
 .info-city
@@ -414,6 +424,7 @@ main
 .sun img
 {
     width: 30rem;
+    animation: scale 4s infinite  alternate ;
 }
 
 .today-forecast
@@ -428,10 +439,11 @@ main
     justify-content: center;
     flex-direction: column;
     position: relative;
+    animation: slide-up .5s alternate;
 }
 .today-forecast h3
 {
-    font-size: .7em;
+    font-size: .8em;
     color: var(--font-color);
     font-weight: 300;
     position: absolute;
@@ -488,13 +500,14 @@ main
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 5fr;
+    animation:slide-up .5s alternate;
 }
 .air-conditions h3
 {
     font-size: .8em;
     display: flex;
     align-items: center;
-    padding-left: 1rem;
+    padding-left: 2rem;
     grid-column: 1;
     grid-row: 1;
     color: var(--font-color);
@@ -579,66 +592,40 @@ main
     grid-row: 1 /span 4;
     border-radius: 10px;
     display: grid;
-    grid-template-rows: repeat(7, 1fr);
+    grid-template-rows: 100% ;
     grid-template-columns:100%;
+    animation: slide-left  .5s alternate;
     
 }
-.today
+.weekforecast h2
+{
+    position: absolute;
+    width: 100%;
+    font-size: .8em;
+    padding: 1rem 2rem;
+    color: var(--font-color);
+    font-weight: 300;
+}
+.containerHours {
+
+    padding-top:  2rem ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow-y: scroll;
+    width: 100%;
+}
+.hours 
 { 
     display: flex;
     align-items: center;
     justify-content: center;
-    grid-column:1 ;
-    grid-row: 1;
+    width: 100%;
+    height: 10rem;
 }
-.tuesday
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column:1 ;
-    grid-row: 2;
-}
-.wed
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column:1 ;
-    grid-row: 3;
-}
-.thu
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column:1 ;
-    grid-row: 4;
-}
-.fri
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column:1 ;
-    grid-row: 5;
-}
-.sat
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column:1 ;
-    grid-row: 6;
-}
-.sunday
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column:1 ;
-    grid-row: 7;
-}
+
+
 .weekforecast .dia
 {
     display: flex;
@@ -674,7 +661,55 @@ main
     width: calc(100% / 3) ;
     overflow: hidden;
 }
-
+@keyframes slide-right {
+    0% {
+      left: -20px;
+      opacity: 0;
+    }
+    100% {
+        left: 0px;
+        opacity: 1;
+    }
+}
+@keyframes slide-bottom {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+@keyframes slide-up {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+@keyframes slide-left {
+    0% {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+@keyframes scale{
+    0% {
+        scale: 1;
+    }
+    100% {
+        scale: 1.10;
+    }
+}
+  
 /* ---------------------- third-component ----------------------   */
 
 
