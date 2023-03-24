@@ -4,7 +4,7 @@ const warning =  document.querySelector(".warningLocationUser");
 const btnConfirmLocation =  document.querySelector(".confirmLocation");
 const btnDeniedLocation = document.querySelector(".deniedLocation");
 var latitude, longitude;
-var cityData, changeRainData, temperatureData, thermalSensationData, windSpeedData, indexUvData;
+var nameCityData, AirUmidityData, temperatureData, thermalSensationData, windSpeedData, climate, visibilityData;
 var forecastHours ={
     sixAm : "",
     nineAm: "",
@@ -20,6 +20,9 @@ const Loader = document.querySelector(".containerLoad")
 const InitScreen = document.querySelector(".init")
 const weatherComponent = document.querySelector(".weatherComponent")
 
+var clickEvent = new Event('click');
+    
+InitScreen.dispatchEvent(clickEvent);
 
 
 
@@ -72,7 +75,11 @@ phoneScreen.addEventListener('change', event => {
     removeTextBtnNav()
 });
 
+function start() {
 
+    Loader.style.display= "none"
+    InitScreen.style.display= "flex"
+}
 function checkPermission() {
    if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -113,25 +120,22 @@ function checkPermission() {
 }
 function toggleTab(currentTab,newTab,showheader){
 
-    currentTab.style.opacity=0
-    Loader.style.opacity=1
+    currentTab.style.display="none"
+    Loader.style.display="flex"
     showheader = false;
 
-    if(newTab == weatherComponent){
-        showheader = true
-    }
-    
+    newTab == weatherComponent?showheader = true:showheader = false
 
-
-
-    
-        Loader.style.opacity=0;
-        newTab.style.opacity=1;
+    setTimeout(()=>{
+        Loader.style.display="none";
+        newTab.style.display="grid";
         
         if(showheader == true){
-            warning.style.opacity=0 
-            navBar.style.opacity=1
+            warning.style.display="none" 
+            navBar.style.display="flex"
         }
+    },2000)
+
    
         
 
@@ -157,11 +161,6 @@ function getLocation() {
 
 
 }
-function start() {
-
-    Loader.style.display= "none"
-    InitScreen.style.display= "flex"
-}
 async function makeRequisitionCity(){
     
     const dados = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`)
@@ -184,39 +183,67 @@ async function makeRequisitionWeather(city) {
 
 }
 function dataProcessingWeather(data){
-    
-    cityData = data.name;
-    changeRainData
+    console.log(data)
+
+    nameCityData = data.name;
     temperatureData = parseInt(data.main.temp)
+    climate = data.weather[0].description
+
     thermalSensationData = parseInt(data.main.feels_like);
     windSpeedData = data.wind.speed;
-    indexUvData
+    AirUmidityData = data.main.humidity;
+    visibilityData = data.visibility;
 
+    console.log(nameCityData)
+    console.log(temperatureData)
+    console.log(climate)
+    console.log(thermalSensationData)
+    console.log(windSpeedData)
+    console.log(AirUmidityData)
+    console.log(visibilityData)
+
+
+
+    async function changeValuesDisplay(){
+        
+        await data
+
+        let visibility = document.querySelector(".Visibilidade");
+        let AirUmidity = document.querySelector(".Umidade");
+        let windSpeed = document.querySelector(".velocidade-vento");
+        let thermalSensation = document.querySelector(".sensacao-termica");
     
+        let nameCity = document.querySelector(".cityName");
+        let climateCity = document.querySelector(".climateCity");
+        let temperature = document.querySelector(".graus");
+    
+        visibility.innerHTML = visibilityData;
+        AirUmidity.innerHTML = `${AirUmidityData}°`;
+        windSpeed.innerHTML = windSpeedData;
+        thermalSensation.innerHTML =`${thermalSensationData}°`;
+
+        nameCity.innerHTML = nameCityData;
+        climateCity.innerHTML = climate;
+        temperature.innerHTML = `${temperatureData}°`;
+    }
+
+    changeValuesDisplay()
+ 
 }
 async function  makeRequisitionForecast(){
 
     let Apikey = "5182a2574871dbd140787ce3dc109c97";
-    const data = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${Apikey}&lang=pt_br`)
+    const data = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${Apikey}`)
     let resposta = await data.json();
 
     
     dataProcessingForecast(resposta)
     
 }
-
-
-
-
-
-
-/* Problemas com promisse  */
 async function dataProcessingForecast(resposta) {
 
     const dados = await resposta;
 
-    
-      
     forecastHours.sixAm = dados.list[1].weather[0].description;
     forecastHours.nineAm = dados.list[2].weather[0].description;
     forecastHours.twelveAm = dados.list[3].weather[0].description;
@@ -224,34 +251,32 @@ async function dataProcessingForecast(resposta) {
     forecastHours.sixPm = dados.list[5].weather[0].description;
     forecastHours.ninePm = dados.list[6].weather[0].description;
 
-    console.log(forecastHours)
 
     const descricaoClima = {
-
-        "céu claro": ` ./assets/img/ensolarado.png`,
-        "poucas nuvens": ` ./assets/img/ensolarado.png`,
-        "nuvens esparsas": ` ./assets/img/nuvens-esparças.png`,
-        "nuvens quebradas": ` ./assets/img/nublado.png`,
-        "nuvens nubladas": ` ./assets/img/parcialmente-nublado-.png`,
-        "chuva leve": ` ./assets/img/chuva-leve-1.png`,
-        "chuva moderada": ` ./assets/img/chuva-leve-2.png`,
-        "chuva forte": ` ./assets/img/chuva-pesada-3.png`,
-        "chuva muito forte": ` ./assets/img/chuva-intensa-4.png`,
-        "chuva extrema": `  ./assets/img/chuva-torrencial-5.png`,
-        "tempestade": ` ./assets/img/storm.png`,
-        "neve": `  ./assets/img/neve.png`,
-        "neve misturada com chuva": ` ./assets/img/chuva-com-neve.png`,
-        "névoa": ` ./assets/img/nevoa.png`,
-        "névoa densa": ` ./assets/img/nevoa.png`,
-        "fumaça": ` ./assets/img/fumaça.png`,
-        "névoa seca":  ` ./assets/img/nevoa.png`,
-        "poeira": ` ./assets/img/poeira.png`,
-        "areia": ` ./assets/img/sand.png`,
-        "cinzas vulcânicas": ` ./assets/img/cinzas-vulcão.png`,
-        "rajadas de vento": `  ./assets/img/clima-ventoso.png`,
-        "tornado": ` ./assets/img/tornado.png`
-    };
     
+        "clear sky":            `./assets/img/ensolarado.png`,
+        "few clouds":           `./assets/img/ensolarado.png`,
+        "scattered clouds":     `./assets/img/nuvens-esparças.png`,
+        "broken clouds":        `./assets/img/nublado.png`,
+        "overcast clouds":      `./assets/img/parcialmente-nublado-.png`,
+        "light rain":           `./assets/img/chuva-leve-1.png`,
+        "moderate rain":        `./assets/img/chuva-leve-2.png`,
+        "heavy intensity rain": `./assets/img/chuva-pesada-3.png`,
+        "very heavy rain":      `./assets/img/chuva-intensa-4.png`,
+        "extreme rain":         `./assets/img/chuva-torrencial-5.png`,
+        "thunderstorm":         `./assets/img/storm.png`,
+        "snow":                 `./assets/img/neve.png`,
+        "mix snow/rain":        `./assets/img/chuva-com-neve.png`,
+        "mist":                 `./assets/img/nevoa.png`,
+        "haze":                 `./assets/img/fumaça.png`,
+        "smoke":                `./assets/img/nevoa.png`,
+        "dust":                 `./assets/img/poeira.png`,
+        "sand":                 `./assets/img/sand.png`,
+        "volcanic ash":         `./assets/img/cinzas-vulcão.png`,
+        "squalls":              `./assets/img/clima-ventoso.png`,
+        "tornado":              `./assets/img/tornado.png`
+
+    };
     
     for (const chave in forecastHours) {
         for (const descricao in descricaoClima) {
@@ -261,78 +286,27 @@ async function dataProcessingForecast(resposta) {
             }
         }
     }
+    async function changeForecastDisplay(){
+        
+        await resposta
 
-    console.log(forecastHours)
-   /*  test(forecastHours) */
-    
+        let imgSixAm = document.querySelector(".imgSixAm");
+        let imgNineAm = document.querySelector(".imgNineAm");
+        let imgTwelveAm = document.querySelector(".imgTwelveAm");
+        let imgThreePm = document.querySelector(".imgThreePm");
+        let imgSixPm = document.querySelector(".imgSixPm");
+        let imgNinePm = document.querySelector(".imgNinePm");
+
+        imgSixAm.src = forecastHours.sixAm;
+        imgNineAm.src = forecastHours.nineAm;
+        imgTwelveAm.src = forecastHours.twelveAm;
+        imgThreePm.src = forecastHours.threePm;
+        imgSixPm.src = forecastHours.sixPm;
+        imgNinePm.src = forecastHours.ninePm;
+
+    }
+
+    changeForecastDisplay()
+   
 }
 
-/* async function test(arg){
-    await dataProcessingForecast();
-    
-    let sixAm = document.querySelector(".imgSixAm");
-    let nineAm = document.querySelector(".imgNineAm");
-    let twelveAm = document.querySelector(".imgTwelveAm");
-    let imgThreePm = document.querySelector(".imgThreePm");
-    let imgSixPm = document.querySelector(".imgSixPm");
-    let imgNinePm = document.querySelector(".imgNinePm")
-    
-    sixAm.src = forecastHours.sixAm;
-} */
-
-
-
-
-
-
-/*
-const descricaoClima = {
-    "céu claro": `<img class="icon-pre-rain" src="./assets/img/ensolarado.png" alt="ensolarado">`,
-    "poucas nuvens": `<img class="icon-pre-rain" src="./assets/img/ensolarado.png" alt="ensolarado">`,
-    "nuvens esparsas": `<img class="icon-pre-rain" src="./assets/img/nuvens-esparças.png" alt="nuvens esparsas">`,
-    "nuvens quebradas": `<img class="icon-pre-rain" src="./assets/img/nublado.png" alt="nublado">`,
-    "nuvens nubladas": `<img class="icon-pre-rain" src="./assets/img/parcialmente-nublado-.png" alt="nublado">`,
-    "chuva leve": `<img class="icon-pre-rain" src="./assets/img/chuva-leve-1.png" alt="chuva-leve">`,
-    "chuva moderada": `<img class="icon-pre-rain" src="./assets/img/chuva-leve-2.png" alt="chuva-moderada">`,
-    "chuva forte": `<img class="icon-pre-rain" src="./assets/img/chuva-pesada-3.png" alt="chuva-forte">`,
-    "chuva muito forte": `<img class="icon-pre-rain" src="./assets/img/chuva-intensa-4.png" alt="chuva-muito-forte">`,
-    "chuva extrema": ` <img class="icon-pre-rain" src="./assets/img/chuva-torrencial-5.png" alt="chuva-extrema">`,
-    "tempestade": `<img class="icon-pre-rain" src="./assets/img/storm.png" alt="tempestade">`,
-    "neve": ` <img class="icon-pre-rain" src="./assets/img/neve.png" alt="neve">`,
-    "neve misturada com chuva": `<img class="icon-pre-rain" src="./assets/img/chuva-com-neve.png" alt="chuva com neve">`,
-    "névoa": `<img class="icon-pre-rain" src="./assets/img/nevoa.png" alt="nevoa">`,
-    "névoa densa": `<img class="icon-pre-rain" src="./assets/img/nevoa.png" alt="nevoa">`,
-    "fumaça": `<img class="icon-pre-rain" src="./assets/img/fumaça.png" alt="fumaca">`,
-    "névoa seca":  `<img class="icon-pre-rain" src="./assets/img/nevoa.png" alt="nevoa">`,
-    "poeira": `<img class="icon-pre-rain" src="./assets/img/poeira.png" alt="poeira">`,
-    "areia": `<img class="icon-pre-rain" src="./assets/img/sand.png" alt="areia">`,
-    "cinzas vulcânicas": `<img class="icon-pre-rain" src="./assets/img/cinzas-vulcão.png" alt="cinzas">`,
-    "rajadas de vento": ` <img class="icon-pre-rain" src="./assets/img/clima-ventoso.png" alt="vento">`,
-    "tornado": `<img class="icon-pre-rain" src="./assets/img/tornado.png" alt="tornado">`
-}; */
-
-
-/* const descricaoClima = {
-    "céu claro": ` ./assets/img/ensolarado.png`,
-    "poucas nuvens": ` ./assets/img/ensolarado.png`,
-    "nuvens esparsas": ` ./assets/img/nuvens-esparças.png`,
-    "nuvens quebradas": ` ./assets/img/nublado.png`,
-    "nuvens nubladas": ` ./assets/img/parcialmente-nublado-.png`,
-    "chuva leve": ` ./assets/img/chuva-leve-1.png`,
-    "chuva moderada": ` ./assets/img/chuva-leve-2.png`,
-    "chuva forte": ` ./assets/img/chuva-pesada-3.png`,
-    "chuva muito forte": ` ./assets/img/chuva-intensa-4.png`,
-    "chuva extrema": `  ./assets/img/chuva-torrencial-5.png`,
-    "tempestade": ` ./assets/img/storm.png`,
-    "neve": `  ./assets/img/neve.png`,
-    "neve misturada com chuva": ` ./assets/img/chuva-com-neve.png`,
-    "névoa": ` ./assets/img/nevoa.png`,
-    "névoa densa": ` ./assets/img/nevoa.png`,
-    "fumaça": ` ./assets/img/fumaça.png`,
-    "névoa seca":  ` ./assets/img/nevoa.png`,
-    "poeira": ` ./assets/img/poeira.png`,
-    "areia": ` ./assets/img/sand.png`,
-    "cinzas vulcânicas": ` ./assets/img/cinzas-vulcão.png`,
-    "rajadas de vento": `  ./assets/img/clima-ventoso.png`,
-    "tornado": ` ./assets/img/tornado.png`
-}; */

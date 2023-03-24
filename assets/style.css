@@ -85,6 +85,7 @@ main
     align-items: center;
     justify-content: center;
     transition: .3s;
+    background: var(--backgroun-dark);
 }
 .loader {
     position: absolute;
@@ -170,7 +171,7 @@ main
 {
     position: absolute;
     top: 50%;
-    opacity: 0;
+    opacity: 1;
     left: 0;
     margin:0 2rem;
     transform: translateY(-50%);
@@ -178,7 +179,7 @@ main
     border-radius: 20px;
     width: 5rem;
     height: 90%;
-    display: flex;
+    display: none;
     align-items: center;
     flex-direction: column;
     padding: 3rem;
@@ -211,7 +212,7 @@ main
 /* ---------------------- first-component ----------------------   */
 .init
 {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     width: 100vw;
@@ -342,8 +343,8 @@ main
     width: 85%;
     height: 90%;
     position: absolute;
-    display: grid;
-    opacity: 0;
+    display: none;
+    opacity: 1;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr 2fr 2fr 3fr;
     right: 0;
@@ -385,9 +386,9 @@ main
 {
     font-size: 2em ;
 }
-.info-city span
+.info-city h3
 {
-    font-size: .7em ;
+    font-size: .8em ;
     color: var(--font-color);
     font-weight: 300;
 }
