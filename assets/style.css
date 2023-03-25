@@ -372,6 +372,11 @@ main
     padding:1rem 2rem;
     animation: slide-bottom .5s alternate;
 }
+.bar:hover
+{
+    cursor: pointer;
+    scale: .99;
+}
 
 .chance-Of-Rain
 {
@@ -441,6 +446,11 @@ main
     position: relative;
     animation: slide-up .5s alternate;
 }
+.today-forecast:hover
+{
+    cursor: pointer;
+    scale: .99;
+}
 .today-forecast h3
 {
     font-size: .8em;
@@ -501,6 +511,11 @@ main
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 5fr;
     animation:slide-up .5s alternate;
+}
+.air-conditions:hover
+{
+    cursor: pointer;
+    scale: .99;
 }
 .air-conditions h3
 {
@@ -596,6 +611,11 @@ main
     grid-template-columns:100%;
     animation: slide-left  .5s alternate;
     
+}
+.weekforecast:hover
+{
+    cursor: pointer;
+    scale: .99;
 }
 .weekforecast h2
 {

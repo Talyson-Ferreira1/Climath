@@ -285,136 +285,125 @@ async function dataProcessingForecast(resposta){
    
 }
 async function dataProcessing5DaysForecast(resposta) {
-
+    
     await resposta;
   
     function separateDaysFromTheList(){
 
         const dailyAverages = {};
-    
-        dias = {
-        dia1: { index1: 0, index2: 5 },
-        dia2: { index1: 6, index2: 13 },
-        dia3: { index1: 14, index2: 21 },
-        dia4: { index1: 22, index2: 29 },
-        dia5: { index1: 30, index2: 37 },
-        };
-    
-        Object.keys(dias).forEach((el) => {
-        let i = dias[el].index1;
-        let j = dias[el].index2;
-    
-        let index = 0;
-    
-        for (let chave in resposta.list) {
-            if (index >= i && index < j) {
-            const dayData = resposta.list[chave];
-            const date = dayData.dt_txt.split(" ")[0];
-            const minTemp = dayData.main.temp_min;
-            const maxTemp = dayData.main.temp_max;
-            const dailyAverage = (minTemp + maxTemp) / 2;
-    
-            if (!dailyAverages[el]) {
-                dailyAverages[el] = [];
-            }
-    
-            let dia = { date, dailyAverage };
-    
-            dailyAverages[el].push(dia);
-            }
-    
-            index++;
-        }
+        let dataWork = resposta.list;
+        
+        
+        dataWork.forEach((item) => {
+          const date = new Date(item.dt_txt);
+          const day = date.getDate();
+          
+          if (!dailyAverages[day]) {
+            dailyAverages[day] = [];
+          }
+          
+          dailyAverages[day].push(item);
         });
 
+        
+        
         return dailyAverages
 
     }
 
-    function createDailyAverage() {
+    function separateHoursFormTheList(){
+        let hoursInDay = {};
+        let day1 = [];
+        let day2 = [];
+        let day3 = [];
+        let day4 = [];
+        let day5 = [];
+        let day6 = [];
+        
+        let dataWork = separateDaysFromTheList();
 
-        const dailyAverages = separateDaysFromTheList();
-        const dailyAverageObj = {};
+        Object.entries(dataWork)[0][1].forEach((hoursList)=>{
+            const data = new Date(hoursList.dt_txt);
 
-        Object.keys(dailyAverages).forEach((el) => {
-            let sum = 0;
-
-            dailyAverages[el].forEach((day) => {
-                sum += day.dailyAverage;
-            });
-
-            const avg = sum / dailyAverages[el].length;
-
-            dailyAverageObj[el] = {
-                date: dailyAverages[el][0].date,
-                average: avg.toFixed(2),
+            const hours  = {
+                tempo: hoursList.weather[0].description,
+                horario: data.getHours().toString().padStart(2, "0")
             };
-        });
 
-        return dailyAverageObj;
+            day1.push(hours)
+        })
+        Object.entries(dataWork)[1][1].forEach((hoursList)=>{
+            const data = new Date(hoursList.dt_txt);
+
+            const hours  = {
+                tempo: hoursList.weather[0].description,
+                horario: data.getHours().toString().padStart(2, "0")
+            };
+
+            day2.push(hours)
+        })
+        Object.entries(dataWork)[2][1].forEach((hoursList)=>{
+            const data = new Date(hoursList.dt_txt);
+
+            const hours  = {
+                tempo: hoursList.weather[0].description,
+                horario: data.getHours().toString().padStart(2, "0")
+            };
+
+            day3.push(hours)
+        })
+        Object.entries(dataWork)[3][1].forEach((hoursList)=>{
+            const data = new Date(hoursList.dt_txt);
+
+            const hours  = {
+                tempo: hoursList.weather[0].description,
+                horario: data.getHours().toString().padStart(2, "0")
+            };
+
+            day4.push(hours)
+        })
+        Object.entries(dataWork)[4][1].forEach((hoursList)=>{
+            const data = new Date(hoursList.dt_txt);
+
+            const hours  = {
+                tempo: hoursList.weather[0].description,
+                horario: data.getHours().toString().padStart(2, "0")
+            };
+
+            day5.push(hours)
+        })
+        Object.entries(dataWork)[5][1].forEach((hoursList)=>{
+            const data = new Date(hoursList.dt_txt);
+
+            const hours  = {
+                tempo: hoursList.weather[0].description,
+                horario: data.getHours().toString().padStart(2, "0")
+            };
+
+            day6.push(hours)
+        })
+        
+        hoursInDay["Dia_1"] = day1;
+        hoursInDay["Dia_2"] = day2;
+        hoursInDay["Dia_3"] = day3;
+        hoursInDay["Dia_4"] = day4;
+        hoursInDay["Dia_5"] = day5;
+        hoursInDay["Dia_6"] = day6;
+
+
+       return hoursInDay
+
+
     }
+
+    return separateHoursFormTheList()
     
-    changeForecastFiveDays(createDailyAverage()) 
 }
 
-async function changeForecastFiveDays(resposta){
-
-    await resposta
-
-    const parentElementCards = document.querySelector(".containerHours")
-
-    function removeList(){
-        const hoursList = document.querySelectorAll('.hours');
-
-        hoursList.forEach(hour => {
-        hour.remove();
-        });
-
-    }
 
 
-    function ConvertValues(){
-        
-        //converte para dias da semana       
-        obj = resposta
-        var weekdays = {};
-        const daysOfWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-        
-        for (let chave in obj) {
-            const data = new Date(obj[chave].date);
-            const diaDaSemana = daysOfWeek[data.getDay()];
-            
-            weekdays[chave] = diaDaSemana;
-        }
-        console.log(weekdays)
-        
-        //converte  para dois digitos
-        var dataForm = {};
-
-        Object.keys(resposta).forEach((el) =>  {
-          const data = new Date(resposta[el].date);
-          const dia = data.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'});
-          dataForm[el] = dia;
-        });
-        console.log(dataForm)
-
-
-        let card1 = `<div class="hours ">
+     
     
-                            <div class="dia">
-                                ${weekdays.dia1}
-                            </div>
-    
-                            <div class="clima">
-                                <img src="./assets/img/risco de chuva.png" alt="Tempestade">
-                                <span>Tempestade</span>
-                            </div>
-                            
-                            <div class="data">
-                                ${dataForm.dia1}
-                            </div>
-    
-                        </div>` 
 
 
 
@@ -423,12 +412,5 @@ async function changeForecastFiveDays(resposta){
 
 
 
-        parentElementCards.innerHTML = card1
 
-    }
-   
-    ConvertValues()
 
-    removeList()
-   
-}
