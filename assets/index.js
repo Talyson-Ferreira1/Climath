@@ -425,8 +425,8 @@ async function change5DaysForecastInDisplay(clima,array){
 
 
 
-    animationCards()
     createCards(clima)
+
 }
 async function createCards(i){
 
@@ -453,7 +453,16 @@ async function createCards(i){
     </div>
     `;
 
-    //Dia 1    
+    function removeCardsStaticMode(){
+        let cards = document.querySelectorAll(".hours")
+
+        cards.forEach((card)=>{
+            card.remove()
+        })
+
+        
+    }
+      
     async function Day1(){
 
         numberOfCardsFirstDay = i['Dia_1'].length;
@@ -515,15 +524,30 @@ async function createCards(i){
         }
     }
 
+    function addActiveClassInTheFirstCard(){
+        let days = document.querySelectorAll(".days")
 
-    //days.foreach(adicione active ao primeiroelemento)
-    
+        days.forEach((dia)=>{
+            dia.children[1].classList.add("active")
+        })
+    }
+
+    removeCardsStaticMode()
     Day1()
     Day2()
     Day3()
     Day4()
-    Day5()
+    Day5() 
+    addActiveClassInTheFirstCard()
 
+    isrtDataInCards(i)
+
+}
+async function isrtDataInCards(data){
+
+    console.log(data)
+
+    animationCards()
 }
 
 function animationCards(){
