@@ -305,7 +305,7 @@ async function dataProcessing5DaysForecast(resposta) {
           dailyAverages[day].push(item);
         });
 
-        
+
         
         return dailyAverages
 
@@ -383,6 +383,7 @@ async function dataProcessing5DaysForecast(resposta) {
             day6.push(hours)
         })
         
+        
         hoursInDay["Dia_1"] = day1;
         hoursInDay["Dia_2"] = day2;
         hoursInDay["Dia_3"] = day3;
@@ -396,13 +397,57 @@ async function dataProcessing5DaysForecast(resposta) {
 
     }
 
-    return separateHoursFormTheList()
+    return change5DaysForecastInDisplay(separateHoursFormTheList(), separateDaysFromTheList())
+    
+}
+async function change5DaysForecastInDisplay(clima,array){
+
+    await array;
+    dateFirstDday = Object.keys(array)[0].toString()
+    dateSecoundDday = Object.keys(array)[1].toString()
+    dateThirdDday = Object.keys(array)[2].toString()
+    dateFourthDday = Object.keys(array)[3].toString()
+    dateFifthtDday = Object.keys(array)[4].toString()
+
+
+    Object.keys(clima).forEach((item)=>{
+
+       
+    
+    
+    });
+    
+
+    animationCards()
     
 }
 
+function animationCards(){
+    let day1 = document.querySelector(".day1"); 
+    let cards = Array.from(day1.children).filter(card => card.tagName === "DIV"); // converte a NodeList em um array e filtra apenas os elementos DIV
+    
+    
+    cards.forEach((card, index)=>{
 
+        index = 0;
 
-     
+        setInterval(() => {
+
+          index++;
+          cards[index -1].classList.remove('active');  
+
+          if (index === cards.length) {
+            index = 0;
+          }
+
+          cards[index].classList.add('active');
+
+        }, 10000);
+
+    })
+}
+   
+
     
 
 
