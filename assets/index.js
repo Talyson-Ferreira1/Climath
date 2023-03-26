@@ -403,23 +403,127 @@ async function dataProcessing5DaysForecast(resposta) {
 async function change5DaysForecastInDisplay(clima,array){
 
     await array;
+
+    dataFirstDay = clima['Dia_1'];
+    dataSecoundDay = clima['Dia_2'];
+    dataThirdDay = clima['Dia_3'];
+    dataFourtDay = clima['Dia_4'];
+    dataFifthtDay = clima['Dia_5'];
+
     dateFirstDday = Object.keys(array)[0].toString()
     dateSecoundDday = Object.keys(array)[1].toString()
     dateThirdDday = Object.keys(array)[2].toString()
     dateFourthDday = Object.keys(array)[3].toString()
     dateFifthtDday = Object.keys(array)[4].toString()
 
-
-    Object.keys(clima).forEach((item)=>{
-
-       
     
-    
+    Object.keys(dataFirstDay).forEach((item)=>{
+
+     //pegar as informações de cada horario e clima
+        
     });
-    
+
+
 
     animationCards()
+    createCards(clima)
+}
+async function createCards(i){
+
+    await i 
+
+    let day1_html = document.querySelector(".day1");
+    let day2_html = document.querySelector(".day2");
+    let day3_html = document.querySelector(".day3");
+    let day4_html = document.querySelector(".day4");
+    let day5_html = document.querySelector(".day5");
+
+    const cardShape = `
+    <div class="dia">
+        Hoje
+    </div>
+
+    <div class="clima">
+        <img src="./assets/img/risco de chuva.png" alt="Tempestade">
+        <span>Tempestade</span>
+    </div>
+
+    <div class="data">
+    20/20
+    </div>
+    `;
+
+    //Dia 1    
+    async function Day1(){
+
+        numberOfCardsFirstDay = i['Dia_1'].length;
+        for (let counter = 0; counter <= numberOfCardsFirstDay; counter++) {
+            const hoursDiv = document.createElement("div");
+
+            hoursDiv.className = "hours";
+            hoursDiv.innerHTML = cardShape;
+            day1_html.appendChild(hoursDiv);
+
+        }
+    }
+    async function Day2(){
+
+        numberOfCardsSecoundDay = i['Dia_2'].length;
+        for (let counter = 0; counter <= numberOfCardsSecoundDay; counter++) {
+            const hoursDiv = document.createElement("div");
+
+            hoursDiv.className = "hours";
+            hoursDiv.innerHTML = cardShape;
+            day2_html.appendChild(hoursDiv);
+
+        }
+    }
+    async function Day3(){
+
+        numberOfCardsThirdtDay = i['Dia_3'].length;
+        for (let counter = 0; counter <= numberOfCardsThirdtDay; counter++) {
+            const hoursDiv = document.createElement("div");
+
+            hoursDiv.className = "hours";
+            hoursDiv.innerHTML = cardShape;
+            day3_html.appendChild(hoursDiv);
+
+        }
+    }
+    async function Day4(){
+
+        numberOfCardsFourthDay = i['Dia_4'].length;
+        for (let counter = 0; counter <= numberOfCardsFourthDay; counter++) {
+            const hoursDiv = document.createElement("div");
+
+            hoursDiv.className = "hours";
+            hoursDiv.innerHTML = cardShape;
+            day4_html.appendChild(hoursDiv);
+
+        }
+    }
+    async function Day5(){
+
+        numberOfCardsFifthtDay = i['Dia_5'].length;
+        for (let counter = 0; counter <= numberOfCardsFifthtDay; counter++) {
+            const hoursDiv = document.createElement("div");
+
+            hoursDiv.className = "hours";
+            hoursDiv.innerHTML = cardShape;
+            day5_html.appendChild(hoursDiv);
+
+        }
+    }
+
+
+    //days.foreach(adicione active ao primeiroelemento)
     
+    Day1()
+    Day2()
+    Day3()
+    Day4()
+    Day5()
+
 }
 
 function animationCards(){
