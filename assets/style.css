@@ -186,6 +186,7 @@ main
     gap: 3rem;
     animation: slide-right .5s alternate;
     z-index: var(--z_header);
+    transition: all 1s ease-in-out;
 }
 .header-ilus
 {
@@ -383,7 +384,7 @@ main
     grid-column:1 ;
     grid-row: 2;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr 1fr;
     animation: slide-up .5s alternate;
    
@@ -873,9 +874,9 @@ main
     }
     .info-city h2
     {
-        font-size: 3em ;
+        font-size: 2em ;
     }
-    .info-city span
+    .info-city h3
     {
         font-size: .9em ;
     }
@@ -883,7 +884,8 @@ main
 
         grid-column:1 ;
         grid-row: 2;
-        
+        padding: 0 2rem;
+        font-size: 3em;
     }
     .sun
     {
@@ -893,6 +895,12 @@ main
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    .sun img
+    {
+        width: 30rem;
+        padding: 0;
+        margin: 0;
     }
 
     .today-forecast
@@ -1009,5 +1017,26 @@ main
         font-family: fontAwesome;
         color: white;
     }
+/* ------------ secund-component ------------ */
 
+
+    .weekforecast .clima img
+    {
+        width:auto;
+        height: 40%;
+    }
+
+
+}
+@media(max-width:430px){
+/* ------------ secund-component ------------ */
+    .chance-Of-Rain
+    {
+        grid-template-columns: 80px 250px;
+    }
+    .weekforecast .clima img
+    {
+        width:auto;
+        height: 30%;
+    }
 }
