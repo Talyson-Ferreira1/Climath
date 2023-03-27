@@ -3,29 +3,24 @@ const btnStart = document.querySelector(".btn-start");
 const warning =  document.querySelector(".warningLocationUser");
 const btnConfirmLocation =  document.querySelector(".confirmLocation");
 const btnDeniedLocation = document.querySelector(".deniedLocation");
+
+const navBar = document.querySelector(".header");
+const Loader = document.querySelector(".containerLoad")
+const InitScreen = document.querySelector(".init")
+const weatherComponent = document.querySelector(".weatherComponent")
+
 var latitude, longitude;
-var nameCityData, AirUmidityData, temperatureData, thermalSensationData, windSpeedData, climate, visibilityData;
-var forecastHours ={
+var nameCityData, AirUmidityData, temperatureData, 
+    thermalSensationData, windSpeedData, climate, visibilityData;
+
+var forecastHours = {
     sixAm : "",
     nineAm: "",
     twelveAm:"",
     threePm:"",
     sixPm:"",
     ninePm:""
-} 
-
-//---------------------------- Commponents ----------------------
-const navBar = document.querySelector(".header");
-const Loader = document.querySelector(".containerLoad")
-const InitScreen = document.querySelector(".init")
-const weatherComponent = document.querySelector(".weatherComponent")
-
-var clickEvent = new Event('click');
-    
-InitScreen.dispatchEvent(clickEvent);
-
-
-
+};
 var weather = navBar.children[1].children[1],
     cities = navBar.children[2].children[1],
     map = navBar.children[3].children[1],
@@ -56,6 +51,30 @@ var descricaoClima = {
     "tornado":              `./assets/img/tornado.png`
 
 };
+var descricaoClimaPt = {
+    "clear sky": "céu limpo",            
+    "few clouds": "poucas nuvens",     
+    "scattered clouds": "nuvens dispersas",  
+    "broken clouds": "nuvens quebradas",  
+    "overcast clouds": "céu nublado",  
+    "light rain": "chuva leve",  
+    "moderate rain": "chuva moderada",  
+    "heavy intensity rain": "chuva forte",  
+    "very heavy rain": "chuva muito forte",  
+    "extreme rain": "chuva extrema",  
+    "thunderstorm": "tempestade",  
+    "snow": "neve",  
+    "mix snow/rain": "chuva com neve",  
+    "mist": "névoa",  
+    "haze": "neblina",  
+    "smoke": "fumaça",  
+    "dust": "poeira",  
+    "sand": "areia",  
+    "volcanic ash": "cinzas vulcânicas", 
+    "squalls": "rajadas de vento",  
+    "tornado": "tornado",  
+};
+
 
 
 btnConfirmLocation.addEventListener('click', checkPermission)
@@ -287,6 +306,7 @@ async function dataProcessingForecast(resposta){
 async function dataProcessing5DaysForecast(resposta) {
     
     await resposta;
+
   
     function separateDaysFromTheList(){
 
@@ -305,9 +325,31 @@ async function dataProcessing5DaysForecast(resposta) {
           dailyAverages[day].push(item);
         });
 
-
+        let maioresQueHoje = []
+        let menoresQueHoje = []
+        let dadosDoDiaAtual = []
+        let dailyAveragesOrg = []
+        let dataDeHoje = new Date().getDate();
         
-        return dailyAverages
+        for(let index = 0;index < 6; index++){
+
+            if(Object.entries(dailyAverages)[index][0] > dataDeHoje ){
+                maioresQueHoje.push(Object.entries(dailyAverages)[index])
+            }
+            if(Object.entries(dailyAverages)[index][0] < dataDeHoje ){
+                menoresQueHoje.push(Object.entries(dailyAverages)[index])
+            }
+            if(Object.entries(dailyAverages)[index][0] == dataDeHoje ){
+                dadosDoDiaAtual.push(Object.entries(dailyAverages)[index])
+            }
+        } 
+
+        dadosDoDiaAtual.forEach(item =>{ dailyAveragesOrg.push(item)})
+        maioresQueHoje.forEach(item =>{ dailyAveragesOrg.push(item)})
+        menoresQueHoje.forEach(item =>{ dailyAveragesOrg.push(item)})
+        
+
+        return dailyAveragesOrg
 
     }
 
@@ -322,7 +364,7 @@ async function dataProcessing5DaysForecast(resposta) {
         
         let dataWork = separateDaysFromTheList();
 
-        Object.entries(dataWork)[0][1].forEach((hoursList)=>{
+        dataWork[0][1].forEach((hoursList)=>{
             const data = new Date(hoursList.dt_txt);
 
             const hours  = {
@@ -332,7 +374,7 @@ async function dataProcessing5DaysForecast(resposta) {
 
             day1.push(hours)
         })
-        Object.entries(dataWork)[1][1].forEach((hoursList)=>{
+        dataWork[1][1].forEach((hoursList)=>{
             const data = new Date(hoursList.dt_txt);
 
             const hours  = {
@@ -342,7 +384,7 @@ async function dataProcessing5DaysForecast(resposta) {
 
             day2.push(hours)
         })
-        Object.entries(dataWork)[2][1].forEach((hoursList)=>{
+        dataWork[2][1].forEach((hoursList)=>{
             const data = new Date(hoursList.dt_txt);
 
             const hours  = {
@@ -352,7 +394,7 @@ async function dataProcessing5DaysForecast(resposta) {
 
             day3.push(hours)
         })
-        Object.entries(dataWork)[3][1].forEach((hoursList)=>{
+        dataWork[3][1].forEach((hoursList)=>{
             const data = new Date(hoursList.dt_txt);
 
             const hours  = {
@@ -362,7 +404,7 @@ async function dataProcessing5DaysForecast(resposta) {
 
             day4.push(hours)
         })
-        Object.entries(dataWork)[4][1].forEach((hoursList)=>{
+        dataWork[4][1].forEach((hoursList)=>{
             const data = new Date(hoursList.dt_txt);
 
             const hours  = {
@@ -372,7 +414,7 @@ async function dataProcessing5DaysForecast(resposta) {
 
             day5.push(hours)
         })
-        Object.entries(dataWork)[5][1].forEach((hoursList)=>{
+        dataWork[5][1].forEach((hoursList)=>{
             const data = new Date(hoursList.dt_txt);
 
             const hours  = {
@@ -403,6 +445,7 @@ async function dataProcessing5DaysForecast(resposta) {
 async function change5DaysForecastInDisplay(clima,array){
 
     await array;
+    
 
     dataFirstDay = clima['Dia_1'];
     dataSecoundDay = clima['Dia_2'];
@@ -449,7 +492,7 @@ async function createCards(i){
     </div>
 
     <div class="data">
-    20/20
+    01/02
     </div>
     `;
 
@@ -466,7 +509,7 @@ async function createCards(i){
     async function Day1(){
 
         numberOfCardsFirstDay = i['Dia_1'].length;
-        for (let counter = 0; counter <= numberOfCardsFirstDay; counter++) {
+        for (let counter = 0; counter < numberOfCardsFirstDay; counter++) {
             const hoursDiv = document.createElement("div");
 
             hoursDiv.className = "hours";
@@ -478,7 +521,7 @@ async function createCards(i){
     async function Day2(){
 
         numberOfCardsSecoundDay = i['Dia_2'].length;
-        for (let counter = 0; counter <= numberOfCardsSecoundDay; counter++) {
+        for (let counter = 0; counter < numberOfCardsSecoundDay; counter++) {
             const hoursDiv = document.createElement("div");
 
             hoursDiv.className = "hours";
@@ -490,7 +533,7 @@ async function createCards(i){
     async function Day3(){
 
         numberOfCardsThirdtDay = i['Dia_3'].length;
-        for (let counter = 0; counter <= numberOfCardsThirdtDay; counter++) {
+        for (let counter = 0; counter < numberOfCardsThirdtDay; counter++) {
             const hoursDiv = document.createElement("div");
 
             hoursDiv.className = "hours";
@@ -502,7 +545,7 @@ async function createCards(i){
     async function Day4(){
 
         numberOfCardsFourthDay = i['Dia_4'].length;
-        for (let counter = 0; counter <= numberOfCardsFourthDay; counter++) {
+        for (let counter = 0; counter < numberOfCardsFourthDay; counter++) {
             const hoursDiv = document.createElement("div");
 
             hoursDiv.className = "hours";
@@ -514,7 +557,7 @@ async function createCards(i){
     async function Day5(){
 
         numberOfCardsFifthtDay = i['Dia_5'].length;
-        for (let counter = 0; counter <= numberOfCardsFifthtDay; counter++) {
+        for (let counter = 0; counter < numberOfCardsFifthtDay; counter++) {
             const hoursDiv = document.createElement("div");
 
             hoursDiv.className = "hours";
@@ -524,11 +567,12 @@ async function createCards(i){
         }
     }
 
+    //revisar
     function addActiveClassInTheFirstCard(){
         let days = document.querySelectorAll(".days")
 
         days.forEach((dia)=>{
-            dia.children[1].classList.add("active")
+            dia.children[0].classList.add("active")
         })
     }
 
@@ -545,41 +589,135 @@ async function createCards(i){
 }
 async function isrtDataInCards(data){
 
-    console.log(data)
+    let nodeListDay1 = document.querySelectorAll(".day1 .hours");
+    let nodeListDay2 = document.querySelectorAll(".day2 .hours");
+    let nodeListDay3 = document.querySelectorAll(".day3 .hours");
+    let nodeListDay4 = document.querySelectorAll(".day4 .hours");
+    let nodeListDay5 = document.querySelectorAll(".day5 .hours");
 
+    insertDay(data['Dia_1'],nodeListDay1);
+    insertDay(data['Dia_2'],nodeListDay2,1);
+    insertDay(data['Dia_3'],nodeListDay3,2);
+    insertDay(data['Dia_4'],nodeListDay4,3);
+    insertDay(data['Dia_5'],nodeListDay5,4);
+
+    function insertDay(dia,cardList,weekday){ 
+
+        let dataDay = dia;
+        let nodeListDay = cardList;
+        
+        function getDay(i) {
+            if(i == undefined){i = 0}
+            const dataAtual = new Date();
+            const diaDaSemana = dataAtual.getDay();
+            const diasDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+            const proximoDia = diasDaSemana[(diaDaSemana + i) % 7];
+        
+            return proximoDia;
+        }
+        function getTextAndImgClima(valor){
+            let climaText;
+            
+            for(const chave in descricaoClima) {
+                if(chave == valor){
+                    for(const chavePt in descricaoClimaPt){
+                        if(chavePt == chave){
+                            climaText = descricaoClimaPt[chavePt]
+                        }
+                    }
+                }
+            }
+
+            return climaText
+        }
+        function getImgClima(valor){
+            let imgClima
+
+            for (const chave in descricaoClima) {
+                if (chave == valor) {
+                    imgClima = descricaoClima[chave]
+                }
+            }
+
+            return imgClima
+        }
+        for(let index = 0; index < dataDay.length; index++ ){
+            
+            let childnodeListDay = Array.from(nodeListDay[index].childNodes).filter(card => card.tagName === "DIV");
+
+            //dia da previsão
+            let diaDaSemanaIsrt = getDay(weekday);
+            let diaDaSemanaDiv = childnodeListDay[0];
+
+            //horario do clima 
+            let horarioDiv  = childnodeListDay[2];
+            let horarioIsrt = dataDay[index].horario;
+
+            //tipo de clima
+            let climaTextIsrt = getTextAndImgClima(dataDay[index].tempo);
+            let climaTextDiv = childnodeListDay[1].children[1];
+
+            //ilustração do tipo de clima
+            let climaImgIsrt = getImgClima(dataDay[index].tempo);
+            let climaImgDiv = childnodeListDay[1].children[0];
+
+            
+            diaDaSemanaDiv.innerText = diaDaSemanaIsrt;
+            climaImgDiv.src = climaImgIsrt;
+            climaTextDiv.innerText = climaTextIsrt;
+            horarioDiv.innerText = `${horarioIsrt}h`;
+            
+            
+        }
+    
+    }
+    
     animationCards()
 }
 
 function animationCards(){
+
     let day1 = document.querySelector(".day1"); 
-    let cards = Array.from(day1.children).filter(card => card.tagName === "DIV"); // converte a NodeList em um array e filtra apenas os elementos DIV
-    
-    
-    cards.forEach((card, index)=>{
+    let day2 = document.querySelector(".day2"); 
+    let day3 = document.querySelector(".day3"); 
+    let day4 = document.querySelector(".day4"); 
+    let day5 = document.querySelector(".day5"); 
 
-        index = 0;
+    function animation(el){  
+        let cards = Array.from(el.children).filter(card => card.tagName === "DIV");
+        cards.forEach(( index)=>{
 
-        setInterval(() => {
-
-          index++;
-          cards[index -1].classList.remove('active');  
-
-          if (index === cards.length) {
             index = 0;
-          }
 
-          cards[index].classList.add('active');
+            setInterval(() => {
 
-        }, 10000);
+            index++;
+            cards[index -1].classList.remove('active');  
 
-    })
+            if (index === cards.length) {
+                index = 0;
+            }
+
+            cards[index].classList.add('active');
+
+            }, 9000);
+
+        })
+    }
+
+    animation(day1)
+    animation(day2)
+    animation(day3)
+    animation(day4)
+    animation(day5)
+    
 }
    
 
     
 
 
-
+//resvisar a inserção de class active
 
 
 
