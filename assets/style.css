@@ -182,7 +182,7 @@ main
     display: none;
     align-items: center;
     flex-direction: column;
-    padding: 3rem;
+    padding: 2rem 0;
     gap: 3rem;
     animation: slide-right .5s alternate;
     z-index: var(--z_header);
@@ -195,6 +195,19 @@ main
 .option
 {
    cursor: pointer;
+   width: 100%;
+   transition: all .1s ease-in-out;
+}
+.option:hover
+{
+    color: #fff;
+    opacity: .8;
+}
+.option.active
+{
+    color: white;
+    opacity: 1;
+    transform: scale(1.08);
 }
 .weather,.cities,.map,.settings
 {
@@ -203,7 +216,7 @@ main
     justify-content: center;
     flex-direction: column;
     gap: .3rem;
-    opacity: .7;
+    opacity: .5;
 }
 .iconHeader
 {
@@ -359,6 +372,9 @@ main
     padding-left: 10rem;
     gap: 1rem;
     z-index: var(--z_component);
+}
+.weatherComponent.active{
+    display: grid;
 }
 .bar
 {
@@ -702,6 +718,40 @@ main
     width: calc(100% / 3) ;
     overflow: hidden;
 }
+
+.cityComponent {
+    width: 100%;
+    height: 90%;
+    position: absolute;
+    background: red;
+    display: none;
+}
+.cityComponent.active {
+    display: grid;
+}
+
+.mapComponent {
+    width: 100%;
+    height: 90%;
+    position: absolute;
+    display: none;
+    background: yellow;
+}
+.mapComponent.active {
+    display: grid;
+}
+
+.settingsComponent {
+    width: 100%;
+    height: 90%;
+    position: absolute;
+    display: none;
+    background: blue;
+}
+.settingsComponent.active {
+    display: grid;
+}
+
 @keyframes slide-right {
     0% {
       left: -20px;

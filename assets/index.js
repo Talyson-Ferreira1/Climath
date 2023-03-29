@@ -8,6 +8,9 @@ const navBar = document.querySelector(".header");
 const Loader = document.querySelector(".containerLoad")
 const InitScreen = document.querySelector(".init")
 const weatherComponent = document.querySelector(".weatherComponent")
+const cityComponent = document.querySelector(".cityComponent")
+const mapComponent = document.querySelector(".mapComponent")
+const settingsComponent = document.querySelector(".settingsComponent")
 
 var latitude, longitude;
 var nameCityData, AirUmidityData, temperatureData, 
@@ -74,8 +77,28 @@ var descricaoClimaPt = {
     "squalls": "rajadas de vento",  
     "tornado": "tornado",  
 };
+/* ------------------------------- work flow ------------------------------- */
+const containerTabs = document.querySelector(".header");
+let childnodeListTabs = Array.from(containerTabs.childNodes).filter(card => card.tagName === "DIV");
 
+//Faz a troca de tabs
+childnodeListTabs.forEach((tab)=>{
 
+    tab.addEventListener('click', ()=>{
+        let currentTab = checkCurrentTab();
+        let showheader = true;
+        let newTab;
+
+        childnodeListTabs.forEach((i)=>{i.classList.remove("active")})
+        tab.classList.add("active")
+        newTab = tab.classList[1] 
+
+        toggleTab(currentTab,newTab,showheader)
+    })
+    
+})
+
+/* ------------------------------------------------------------------------------- */
 
 btnConfirmLocation.addEventListener('click', checkPermission)
 btnStart.addEventListener('click', showWarning)
@@ -124,7 +147,7 @@ function checkPermission() {
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
         warning.style.display="none";
-        toggleTab(InitScreen,weatherComponent,true);
+        toggleTab('InitScreen','weather',true);
         
         makeRequisitionCity()
         makeRequisitionForecast()
@@ -157,12 +180,49 @@ function showWarning() {
 
 }
 function toggleTab(currentTab,newTab,showheader){
+    
+    switch (currentTab) {
+        case 'InitScreen':
+            currentTab = InitScreen;
+            break;
+        case 'weather':
+            currentTab = weatherComponent;
+            break;
+        case 'cities':
+            currentTab = cityComponent;
+            break;
+        case 'map':
+            currentTab = mapComponent;
+            break;
+        case 'settings':
+            currentTab = settingsComponent;
+            break;
+        default:
+            break;
+    }
 
+    switch (newTab) {
+        case 'InitScreen':
+            newTab = InitScreen;
+            break;
+        case 'weather':
+            newTab = weatherComponent;
+            break;
+        case 'cities':
+            newTab = cityComponent;
+            break;
+        case 'map':
+            newTab = mapComponent;
+            break;
+        case 'settings':
+            newTab = settingsComponent;
+            break;
+        default:
+            break;
+    }
+    
     currentTab.style.display="none"
     Loader.style.display="flex"
-    showheader = false;
-
-    newTab == weatherComponent?showheader = true:showheader = false
 
     setTimeout(()=>{
         Loader.style.display="none";
@@ -189,6 +249,35 @@ function getLocation() {
 
 
 
+}
+function checkCurrentTab(){
+    let elemento,arrayOfClass;
+
+    childnodeListTabs.forEach((el)=>{
+        if(el.classList.contains("active")){
+            arrayOfClass =  Array.from(el.classList)
+        }
+    })
+    
+    switch (arrayOfClass[1]) {
+        case 'weather':
+        elemento = 'weather'
+        break;
+        case 'cities':
+        elemento = 'cities'
+        break;
+        case 'map':
+        elemento = 'map'
+        break;
+        case 'settings':
+        elemento = 'settings'
+        break;
+        default:
+        break;
+    }
+      
+
+    return elemento 
 }
 async function makeRequisitionCity(){
     
@@ -674,7 +763,6 @@ async function isrtDataInCards(data){
     
     animationCards()
 }
-
 function animationCards(){
 
     let day1 = document.querySelector(".day1"); 
@@ -714,7 +802,7 @@ function animationCards(){
 }
    
 
-    
+  
 
 
 //resvisar a inserção de class active
