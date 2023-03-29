@@ -11,10 +11,22 @@ const weatherComponent = document.querySelector(".weatherComponent")
 const cityComponent = document.querySelector(".cityComponent")
 const mapComponent = document.querySelector(".mapComponent")
 const settingsComponent = document.querySelector(".settingsComponent")
+const childnodeListTabs = Array.from(navBar.childNodes).filter(card => card.tagName === "DIV");
+const btnSearchCity = document.querySelector("btnSearch")
+var nameCityData,
+    AirUmidityData,
+    temperatureData, 
+    thermalSensationData, 
+    windSpeedData, 
+    climate,
+    visibilityData,
+    latitude, 
+    longitude,
+    weather = navBar.children[1].children[1],
+    cities = navBar.children[2].children[1],
+    map = navBar.children[3].children[1],
+    settings =navBar.children[4].children[1];
 
-var latitude, longitude;
-var nameCityData, AirUmidityData, temperatureData, 
-    thermalSensationData, windSpeedData, climate, visibilityData;
 
 var forecastHours = {
     sixAm : "",
@@ -24,11 +36,6 @@ var forecastHours = {
     sixPm:"",
     ninePm:""
 };
-var weather = navBar.children[1].children[1],
-    cities = navBar.children[2].children[1],
-    map = navBar.children[3].children[1],
-    settings =navBar.children[4].children[1];
-
 var descricaoClima = {
     
     "clear sky":            `./assets/img/ensolarado.png`,
@@ -77,28 +84,7 @@ var descricaoClimaPt = {
     "squalls": "rajadas de vento",  
     "tornado": "tornado",  
 };
-/* ------------------------------- work flow ------------------------------- */
-const containerTabs = document.querySelector(".header");
-let childnodeListTabs = Array.from(containerTabs.childNodes).filter(card => card.tagName === "DIV");
 
-//Faz a troca de tabs
-childnodeListTabs.forEach((tab)=>{
-
-    tab.addEventListener('click', ()=>{
-        let currentTab = checkCurrentTab();
-        let showheader = true;
-        let newTab;
-
-        childnodeListTabs.forEach((i)=>{i.classList.remove("active")})
-        tab.classList.add("active")
-        newTab = tab.classList[1] 
-
-        toggleTab(currentTab,newTab,showheader)
-    })
-    
-})
-
-/* ------------------------------------------------------------------------------- */
 
 btnConfirmLocation.addEventListener('click', checkPermission)
 btnStart.addEventListener('click', showWarning)
@@ -133,6 +119,42 @@ phoneScreen.addEventListener('change', event => {
     removeTextBtnStart()
     removeTextBtnNav()
 });
+childnodeListTabs.forEach((tab)=>{
+    //Responsável pela troca de tabs
+    tab.addEventListener('click', ()=>{
+        let currentTab = checkCurrentTab();
+        let showheader = true;
+        let newTab;
+
+        childnodeListTabs.forEach((i)=>{i.classList.remove("active")})
+        tab.classList.add("active")
+        newTab = tab.classList[1] 
+
+        toggleTab(currentTab,newTab,showheader)
+        decreaseMain()
+    })
+    
+})
+
+function decreaseMainAndBody()  {   
+    let main = document.querySelector("main") 
+    let body = document.querySelector("body") 
+
+    if(childnodeListTabs[1].classList.contains("active") ){
+
+        main.classList.add("citiesHeight")
+        body.classList.add("citiesHeight")
+
+        console.log('ativo')
+    }else{
+        main.classList.remove("citiesHeight")
+        body.classList.remove("citiesHeight")
+
+        
+        console.log('rmoveu')
+    }
+}
+
 
 function start() {
 
@@ -800,12 +822,10 @@ function animationCards(){
     animation(day5)
     
 }
-   
-
-  
 
 
-//resvisar a inserção de class active
+
+
 
 
 

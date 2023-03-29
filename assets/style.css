@@ -14,6 +14,8 @@
     --background-light:#ffffff17;
     --blue:#0095ff;
     --font-color:rgba(255, 255, 255,0.8);
+    --font-opacity:rgba(255, 255, 255, 0.579);
+    --font-vivid:rgb(255, 255, 255);
 
     /* --------- Fonts --------- */
     --font-poppins: 'Poppins', sans-serif;
@@ -42,7 +44,6 @@ body
     width: 100vw;
     height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
     overflow-x: hidden;
     background:var(--backgroun-dark) ;
@@ -61,6 +62,7 @@ body::-webkit-scrollbar-thumb
     background-color: var( --backgroun-dark);
     border-radius: 5px;
 }
+
 /* ---------------------- cod ----------------------   */
 main
 {
@@ -388,6 +390,7 @@ main
     align-items: center;
     padding:1rem 2rem;
     animation: slide-bottom .5s alternate;
+    color: var(--font-opacity);
 }
 .bar:hover
 {
@@ -421,7 +424,7 @@ main
 .info-city h3
 {
     font-size: .8em ;
-    color: var(--font-color);
+    color: var(--font-opacity);
     font-weight: 300;
 }
 .graus
@@ -670,7 +673,7 @@ main
     width: 100%;
     height:100%;
     position: absolute;
-    animation: card-animation 9s infinite;
+    /* animation: card-animation 9s infinite; */
 
 }
 .hours:hover
@@ -690,6 +693,7 @@ main
     justify-content: center;
     height: 100%;
     width: calc(100% / 3) ;
+    color: var(--font-opacity);
 }
 .weekforecast .clima  
 {
@@ -718,18 +722,132 @@ main
     width: calc(100% / 3) ;
     overflow: hidden;
 }
-
+/* ---------------------- third-component ----------------------   */
 .cityComponent {
+    top: 0;
     width: 100%;
     height: 90%;
     position: absolute;
-    background: red;
     display: none;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 3fr 3fr 3fr 3fr;
+    right: 0;
+    margin: 1rem ;
+    padding-left: 10rem;
+    gap: 1rem;
+    z-index: var(--z_component);
 }
 .cityComponent.active {
     display: grid;
 }
+.barToSearchCity {
+    background: var(--background-light);
+    border-radius: 10px;
+    animation: slide-bottom .5s alternate;
+    position: relative;
+    overflow: hidden;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+    min-height: 3rem;
+}
+.barToSearchCity .inputCitySearch {
+    background: transparent;
+    border: none;
+    outline: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z_component);
+    font-size: 1rem;
+    
+}
+.inputCitySearch:is(:valid, :focus) ~ span
+{
 
+    opacity: 0;
+}
+.barToSearchCity span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--font-opacity);
+    z-index: 0;
+}
+.barToSearchCity .btnSearch {
+    position: absolute;
+    width: 5rem;
+    height: 70%;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    background: var(--background-light);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: var(--z_component);
+    transition: all .5s;
+    border-radius: 10px;
+}
+.btnSearch:hover {
+    height: 75%;
+    border-radius: 20px;
+}
+.btnSearch::after {
+    content: '\f1d8';
+    font-family: fontAwesome;
+    font-size:1.5rem;
+    color: #007196;
+
+}
+
+
+.loadedCities {
+
+    background: var(--background-light);
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: .6fr 1fr 3fr 1fr;
+    grid-template-rows: 100%;
+    animation: slide-up .5s alternate;
+}
+.loadedCities .ilustacaoClimaSearch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loadedCities .ilustacaoClimaSearch img {
+
+    width:40%;
+}
+
+.loadedCities .infoCitySearch {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+.infoCitySearch .name {
+
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 1rem 0;
+}
+.infoCitySearch .horario {
+    color: var(--font-opacity);
+}
+
+.temperatura {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.temperatura span{
+
+    font-size: 3rem;
+    
+}
+/* ---------------------- fourth-component ----------------------   */
 .mapComponent {
     width: 100%;
     height: 90%;
@@ -740,7 +858,7 @@ main
 .mapComponent.active {
     display: grid;
 }
-
+/* ---------------------- fifth-component ----------------------   */
 .settingsComponent {
     width: 100%;
     height: 90%;
@@ -813,10 +931,7 @@ main
 
 }
   
-/* ---------------------- third-component ----------------------   */
 
-
-/* -------------------- Mediaquery -------------------- */
 @media(max-width:768px){
     /* tablets */
 
@@ -825,16 +940,27 @@ main
     body
     {
 
-        height: 200vh;
+        height: 230vh;
     }
     main
     {
         width: 100vw;
-        max-height:200vh;
+        max-height:230vh;
         padding: 3rem 1rem;
-        height: 200vh;
+        height: auto;
 
     }
+    main.citiesHeight
+    {
+        height: 110vh;
+    }
+    body.citiesHeight
+    {
+        height: 110vh;
+    }
+    
+    
+    
 /* ---------------------- Header ----------------------   */
 
     .header
@@ -886,12 +1012,14 @@ main
     {
         width: 100%;
         height: 100%;
+        top: 0;
         position: relative;
         grid-template-columns: 100%;
         grid-template-rows: .5fr 2.5fr 2fr 3fr 2.5fr ;
         margin: 1rem 1rem 4rem 1rem;
         gap: 1.5rem;
         padding: 0;
+      
     }
 
     .bar
@@ -1031,8 +1159,17 @@ main
     {
         padding: 0 0 0 2rem;
     }
-
-
+/* ------------ third-component ------------ */
+    .cityComponent
+    {
+        padding-left: 2rem;
+    }
+    .barToSearchCity {
+        padding-left: 1rems ;
+    }
+    .loadedCities {
+        padding-left: 1rem;
+    }
 
 
 
@@ -1075,7 +1212,18 @@ main
         width:auto;
         height: 40%;
     }
-
+/* ------------ third-component ------------ */
+    .cityComponent {
+        grid-template-rows: 3rem 10rem  10rem  10rem  10rem;
+        height: 100vh;
+    }
+    .loadedCities {
+        grid-template-columns: .6fr 1fr  1fr;
+        height: 10rem;
+    }
+    .forecastCitySearch {
+        display: none;
+    }
 
 }
 @media(max-width:430px){
@@ -1088,5 +1236,17 @@ main
     {
         width:auto;
         height: 30%;
+    }
+/* ------------ third-component ------------ */
+    .infoCitySearch .name {
+
+        font-size: 1.5rem;
+    }
+    .infoCitySearch .horario {
+        font-size: .8rem;
+        color: var(--font-opacity);
+    }
+    .temperatura span {
+        font-size: 2.5rem;
     }
 }
