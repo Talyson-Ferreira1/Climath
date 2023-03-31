@@ -12,7 +12,8 @@ const cityComponent = document.querySelector(".cityComponent")
 const mapComponent = document.querySelector(".mapComponent")
 const settingsComponent = document.querySelector(".settingsComponent")
 const childnodeListTabs = Array.from(navBar.childNodes).filter(card => card.tagName === "DIV");
-const btnSearchCity = document.querySelector("btnSearch")
+const btnSearchCity = document.querySelector(".btnSearch")
+
 var nameCityData,
     AirUmidityData,
     temperatureData, 
@@ -85,7 +86,7 @@ var descricaoClimaPt = {
     "tornado": "tornado",  
 };
 
-
+btnSearchCity.addEventListener('click',createNewcity)
 btnConfirmLocation.addEventListener('click', checkPermission)
 btnStart.addEventListener('click', showWarning)
 btnDeniedLocation.addEventListener('click', ()=>{
@@ -108,14 +109,15 @@ phoneScreen.addEventListener('change', event => {
         }
 
     }
-
+    
     function removeTextBtnStart(){
         if (event.matches) {
-            btnStart.innerText = ""
+            btnStart.innerText = "";
         } else {
-            btnStart.innerText = "Iniciar"
+            btnStart.innerText = "Iniciar";
         }
     }
+
     removeTextBtnStart()
     removeTextBtnNav()
     decreaseMainAndBody()
@@ -132,7 +134,7 @@ childnodeListTabs.forEach((tab)=>{
         newTab = tab.classList[1] 
 
         toggleTab(currentTab,newTab,showheader)
-        decreaseMain()
+        decreaseMainAndBody()
     })
     
 })
@@ -146,14 +148,10 @@ function decreaseMainAndBody()  {
 
         main.classList.add("citiesHeight")
         body.classList.add("citiesHeight")
-
-        console.log('ativo')
     }else{
         main.classList.remove("citiesHeight")
         body.classList.remove("citiesHeight")
 
-        
-        console.log('rmoveu')
     }
 }
 
@@ -826,8 +824,6 @@ function animationCards(){
 }
 async function makeRequisitionTabCities(){
 
-    //fazer a requisição de cada cidade 
-    //criar uma função parar tratar e exporesses dados
     let Apikey = "5182a2574871dbd140787ce3dc109c97";
 
     const dataFortaleza = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=fortaleza&units=metric&lang=pt_br&mode=json&appid=${Apikey}`)
@@ -914,9 +910,76 @@ async function makeRequisitionTabCities(){
     changeInfoSaoPaulo()
     changeInfoRiodeJan()
 }
+async function makeRequisitionNewCity(value){
+    let Apikey = "5182a2574871dbd140787ce3dc109c97";
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value}&units=metric&lang=pt_br&mode=json&appid=${Apikey}`);
+    
+        if (!response.ok) { throw new Error('Erro ao obter dados do clima');}
+    
+       var resposta = await response.json();
+    
+    } catch (error) { erroNameCity(error);}
+    
+    return resposta
+}
+async function createNewcity(){
+    
+    let valueInput = document.querySelector('.inputCitySearch');
+    let containerCards = document.querySelector('.cityComponent');
+    let data
+
+    if(!valueInput.value  == ""){
+        data = await makeRequisitionNewCity(valueInput.value)
+        valueInput.value = ""
+    }else{
+        console.log("sem dados")
+    }
+    
+    async function createCardCity(){
+        await data
+
+        let nomeData = data.name
+        let temperaturaData = parseInt(data.main.temp)
+        let climaData = data.weather[0].description
+        let i = new Date();
+        let horaData = i.getHours();
+
+        const cardShape = `
+        <div class="loadedCities ${nomeData}">
+            <div class="ilustacaoClimaSearch">
+                <img src="./assets/img/chuva-leve-2.png" alt="">
+            </div>
+            <div class="infoCitySearch">
+                <div class="name">${nomeData}</div>
+                <div class="horario">${horaData}:00</div>
+            </div>
+            <div class="forecastCitySearch"></div>
+            <div class="temperatura">
+                <span>${temperaturaData}°</span>
+            </div>
+        </div>`
+
+        let  ultimo = containerCards.lastElementChild;
+        let bar = containerCards.children[0];
+        ultimo.remove()
+        bar.insertAdjacentHTML('afterend', cardShape)
+    }
+    createCardCity()
+}   
 makeRequisitionTabCities()
 
+function erroNameCity(){
+    let placeholder = document.querySelector(".barToSearchCity span ")
+    placeholder.innerText = " Digite um nome válido"
+    placeholder.style.color= "red"
 
+
+    setTimeout(()=>{
+        placeholder.innerText = "Procure por uma cidade inserindo o nome"
+        placeholder.style.color= "#ffffff94"
+    },2000)
+}
 
 
 
