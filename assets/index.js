@@ -111,13 +111,14 @@ phoneScreen.addEventListener('change', event => {
 
     function removeTextBtnStart(){
         if (event.matches) {
-            btnStart.innerText = " "
+            btnStart.innerText = ""
         } else {
             btnStart.innerText = "Iniciar"
         }
     }
     removeTextBtnStart()
     removeTextBtnNav()
+    decreaseMainAndBody()
 });
 childnodeListTabs.forEach((tab)=>{
     //Responsável pela troca de tabs
@@ -136,6 +137,7 @@ childnodeListTabs.forEach((tab)=>{
     
 })
 
+//Resolver bug adicionandon uma condicionaçde tamanho
 function decreaseMainAndBody()  {   
     let main = document.querySelector("main") 
     let body = document.querySelector("body") 
@@ -822,9 +824,97 @@ function animationCards(){
     animation(day5)
     
 }
+async function makeRequisitionTabCities(){
 
+    //fazer a requisição de cada cidade 
+    //criar uma função parar tratar e exporesses dados
+    let Apikey = "5182a2574871dbd140787ce3dc109c97";
 
+    const dataFortaleza = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=fortaleza&units=metric&lang=pt_br&mode=json&appid=${Apikey}`)
+    let respostaFortaleza = await dataFortaleza.json();
 
+    const dataBrasilia = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Brasilia&units=metric&lang=pt_br&mode=json&appid=${Apikey}`)
+    let respostaBrasilia = await dataBrasilia.json();
+
+    const dataSaoPaulo = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=sao Paulo&units=metric&lang=pt_br&mode=json&appid=${Apikey}`)
+    let respostaSaoPaulo = await dataSaoPaulo.json();
+
+    const dataRioDeJaneiro = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=rio de janeiro&units=metric&lang=pt_br&mode=json&appid=${Apikey}`)
+    let respostaRioDeJaneiro = await dataRioDeJaneiro.json();
+
+    async function changeInfoFort(){
+        await respostaFortaleza
+        
+        let temperaturaHtml = document.querySelector('.fortaleza .temperatura span')
+        let climaHtml = document.querySelector('.fortaleza .ilustacaoClimaSearch img')
+        let horarioHtml = document.querySelector('.fortaleza .horario') 
+
+        let temperaturaData = parseInt(respostaFortaleza.main.temp)
+        let climaData =respostaFortaleza.weather[0].description
+        let i = new Date();
+        let horaData = i.getHours();
+
+        temperaturaHtml.innerText = `${temperaturaData}°`;
+        climaHtml.src  //Fazer tratamento
+        horarioHtml.innerText = `${horaData}:00`
+    }
+    async function changeInfoBras(){
+        await respostaBrasilia
+        
+        let temperaturaHtml =document.querySelector('.rioDeJaneiro .temperatura span')
+        let climaHtml = document.querySelector('.rioDeJaneiro .ilustacaoClimaSearch img')
+        let horarioHtml = document.querySelector('.rioDeJaneiro .horario')
+
+        let temperaturaData = parseInt(respostaBrasilia.main.temp)
+        let climaData =respostaBrasilia.weather[0].description
+        let i = new Date();
+        let horaData = i.getHours();
+
+        temperaturaHtml.innerText = `${temperaturaData}°`;
+        climaHtml.src  //Fazer tratamento
+        horarioHtml.innerText = `${horaData}:00`
+    }
+    async function changeInfoSaoPaulo(){
+        await respostaSaoPaulo
+                
+        let temperaturaHtml = document.querySelector('.saoPaulo .temperatura span')
+        let climaHtml = document.querySelector('.saoPaulo .ilustacaoClimaSearch img')
+        let horarioHtml = document.querySelector('.saoPaulo .horario')
+
+        let temperaturaData = parseInt(respostaSaoPaulo.main.temp)
+        let climaData =respostaSaoPaulo.weather[0].description
+        let i = new Date();
+        let horaData = i.getHours();
+
+        temperaturaHtml.innerText = `${temperaturaData}°`;
+        climaHtml.src  //Fazer tratamento
+        horarioHtml.innerText = `${horaData}:00`
+
+    }
+    async function changeInfoRiodeJan(){
+        await respostaRioDeJaneiro
+       
+                
+        let temperaturaHtml =document.querySelector('.brasilia .temperatura span')
+        let climaHtml = document.querySelector('.brasilia .ilustacaoClimaSearch img')
+        let horarioHtml = document.querySelector('.brasilia .horario')
+
+        let temperaturaData = parseInt(respostaRioDeJaneiro.main.temp)
+        let climaData =respostaRioDeJaneiro.weather[0].description
+        let i = new Date();
+        let horaData = i.getHours();
+
+        temperaturaHtml.innerText = `${temperaturaData}°`;
+        climaHtml.src  //Fazer tratamento
+        horarioHtml.innerText = `${horaData}:00`
+    }
+
+    changeInfoFort()
+    changeInfoBras()
+    changeInfoSaoPaulo()
+    changeInfoRiodeJan()
+}
+makeRequisitionTabCities()
 
 
 
