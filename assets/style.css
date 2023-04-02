@@ -782,6 +782,10 @@ main
 
     opacity: 0;
 }
+.barToSearchCity.active
+{
+    animation: shake .5s reverse ;
+}
 .barToSearchCity span {
     position: absolute;
     top: 50%;
@@ -955,7 +959,21 @@ main
     100% {opacity: 0;}
 
 }
-  
+@keyframes shake {
+    0% {transform:translateX(0px);}
+
+    20% {transform:translateX(10px);}
+
+    40% {transform:translateX(-10px);}
+
+    60% {transform:translateX(10px);}
+
+    80% {transform:translateX(-10px);}
+
+    100% {transform:translateX(0px);}
+
+}
+
 
 @media(max-width:768px){
     /* tablets */

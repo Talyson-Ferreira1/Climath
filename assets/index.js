@@ -97,6 +97,7 @@ btnDeniedLocation.addEventListener('click', ()=>{
 })
 inputSeachCity.addEventListener('keypress',(event)=>{
     if (event.keyCode === 13){createNewcity()}
+
 })
 function removeTextBtnNav(){
     if(phoneScreen.matches){
@@ -119,11 +120,7 @@ function removeTextBtnStart() {
       btnStart.innerText = "Iniciar";
     }
 }
-//ou init screen ativado
 
-removeTextBtnStart();
-removeTextBtnNav();
-increaseScreenSize();
 
 phoneScreen.addEventListener("change", () => {
     removeTextBtnStart();
@@ -832,37 +829,47 @@ async function makeRequisitionTabCities(){
 
     let Apikey = "5182a2574871dbd140787ce3dc109c97";
 
-    const dataFortaleza = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=fortaleza&units=metric&lang=pt_br&mode=json&appid=${Apikey}`)
+    const dataFortaleza = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=fortaleza&units=metric&mode=json&appid=${Apikey}`)
     let respostaFortaleza = await dataFortaleza.json();
 
-    const dataBrasilia = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Brasilia&units=metric&lang=pt_br&mode=json&appid=${Apikey}`)
+    const dataBrasilia = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Brasilia&units=metric&mode=json&appid=${Apikey}`)
     let respostaBrasilia = await dataBrasilia.json();
 
-    const dataSaoPaulo = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=sao Paulo&units=metric&lang=pt_br&mode=json&appid=${Apikey}`)
+    const dataSaoPaulo = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=sao Paulo&units=metric&mode=json&appid=${Apikey}`)
     let respostaSaoPaulo = await dataSaoPaulo.json();
 
-    const dataRioDeJaneiro = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=rio de janeiro&units=metric&lang=pt_br&mode=json&appid=${Apikey}`)
+    const dataRioDeJaneiro = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=rio de janeiro&units=metric&mode=json&appid=${Apikey}`)
     let respostaRioDeJaneiro = await dataRioDeJaneiro.json();
 
     async function changeInfoFort(){
         await respostaFortaleza
+        let imgClimaData
         
         let temperaturaHtml = document.querySelector('.fortaleza .temperatura span')
         let climaHtml = document.querySelector('.fortaleza .ilustacaoClimaSearch img')
         let horarioHtml = document.querySelector('.fortaleza .horario') 
 
         let temperaturaData = parseInt(respostaFortaleza.main.temp)
-        let climaData =respostaFortaleza.weather[0].description
+        let climaData = respostaFortaleza.weather[0].description
         let i = new Date();
         let horaData = i.getHours();
-
+        for (const chave in descricaoClima) {
+            if (chave == climaData) {
+                imgClimaData = descricaoClima[chave]
+            }
+        }
+        
         temperaturaHtml.innerText = `${temperaturaData}°`;
-        climaHtml.src  //Fazer tratamento
+        climaHtml.src = imgClimaData
         horarioHtml.innerText = `${horaData}:00`
+
+        
+        
     }
     async function changeInfoBras(){
         await respostaBrasilia
-        
+        let imgClimaData
+
         let temperaturaHtml =document.querySelector('.rioDeJaneiro .temperatura span')
         let climaHtml = document.querySelector('.rioDeJaneiro .ilustacaoClimaSearch img')
         let horarioHtml = document.querySelector('.rioDeJaneiro .horario')
@@ -871,14 +878,19 @@ async function makeRequisitionTabCities(){
         let climaData =respostaBrasilia.weather[0].description
         let i = new Date();
         let horaData = i.getHours();
+        for (const chave in descricaoClima) {
+            if (chave == climaData) {
+                imgClimaData = descricaoClima[chave]
+            }
+        }
 
         temperaturaHtml.innerText = `${temperaturaData}°`;
-        climaHtml.src  //Fazer tratamento
+        climaHtml.src  = imgClimaData
         horarioHtml.innerText = `${horaData}:00`
     }
     async function changeInfoSaoPaulo(){
         await respostaSaoPaulo
-                
+        let imgClimaData            
         let temperaturaHtml = document.querySelector('.saoPaulo .temperatura span')
         let climaHtml = document.querySelector('.saoPaulo .ilustacaoClimaSearch img')
         let horarioHtml = document.querySelector('.saoPaulo .horario')
@@ -887,15 +899,20 @@ async function makeRequisitionTabCities(){
         let climaData =respostaSaoPaulo.weather[0].description
         let i = new Date();
         let horaData = i.getHours();
+        for (const chave in descricaoClima) {
+            if (chave == climaData) {
+                imgClimaData = descricaoClima[chave]
+            }
+        }
 
         temperaturaHtml.innerText = `${temperaturaData}°`;
-        climaHtml.src  //Fazer tratamento
+        climaHtml.src  = imgClimaData
         horarioHtml.innerText = `${horaData}:00`
 
     }
     async function changeInfoRiodeJan(){
         await respostaRioDeJaneiro
-       
+        let imgClimaData
                 
         let temperaturaHtml =document.querySelector('.brasilia .temperatura span')
         let climaHtml = document.querySelector('.brasilia .ilustacaoClimaSearch img')
@@ -905,9 +922,14 @@ async function makeRequisitionTabCities(){
         let climaData =respostaRioDeJaneiro.weather[0].description
         let i = new Date();
         let horaData = i.getHours();
+        for (const chave in descricaoClima) {
+            if (chave == climaData) {
+                imgClimaData = descricaoClima[chave]
+            }
+        }
 
         temperaturaHtml.innerText = `${temperaturaData}°`;
-        climaHtml.src  //Fazer tratamento
+        climaHtml.src  = imgClimaData
         horarioHtml.innerText = `${horaData}:00`
     }
 
@@ -919,7 +941,7 @@ async function makeRequisitionTabCities(){
 async function makeRequisitionNewCity(value){
     let Apikey = "5182a2574871dbd140787ce3dc109c97";
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value}&units=metric&lang=pt_br&mode=json&appid=${Apikey}`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value}&units=metric&mode=json&appid=${Apikey}`);
     
         if (!response.ok) { throw new Error('Erro ao obter dados do clima');}
     
@@ -944,17 +966,23 @@ async function createNewcity(){
     
     async function createCardCity(){
         await data
+        let imgClimaData
 
         let nomeData = data.name
         let temperaturaData = parseInt(data.main.temp)
         let climaData = data.weather[0].description
         let i = new Date();
         let horaData = i.getHours();
+        for (const chave in descricaoClima) {
+            if (chave == climaData) {
+                imgClimaData = descricaoClima[chave]
+            }
+        }
 
         const cardShape = `
         <div class="loadedCities ${nomeData}">
             <div class="ilustacaoClimaSearch">
-                <img src="./assets/img/chuva-leve-2.png" alt="">
+                <img src="${imgClimaData}" alt="clima">
             </div>
             <div class="infoCitySearch">
                 <div class="name">${nomeData}</div>
@@ -971,24 +999,30 @@ async function createNewcity(){
         ultimo.remove()
         bar.insertAdjacentHTML('afterend', cardShape)
     }
+    inputSeachCity.blur();
     createCardCity()
 }   
 makeRequisitionTabCities()
 
 function erroNameCity(){
     let placeholder = document.querySelector(".barToSearchCity span ")
+    let input = document.querySelector(".barToSearchCity")
     placeholder.innerText = " Digite um nome válido"
-    placeholder.style.color= "red"
+    placeholder.style.color= "#a91d1d"
+    input.classList.add("active")
 
 
     setTimeout(()=>{
         placeholder.innerText = "Procure por uma cidade inserindo o nome"
         placeholder.style.color= "#ffffff94"
-    },2000)
+        input.classList.remove("active")
+    },1500)
 }
 
 
-
+removeTextBtnStart();
+removeTextBtnNav();
+increaseScreenSize();
 
 
 
