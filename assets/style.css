@@ -14,7 +14,7 @@
     --background-light:#ffffff17;
     --blue:#0095ff;
     --font-color:rgba(255, 255, 255,0.8);
-    --font-opacity:rgba(255, 255, 255, 0.579);
+    --font-opacity:rgba(255, 255, 255, 0.58);
     --font-vivid:rgb(255, 255, 255);
 
     /* --------- Fonts --------- */
@@ -63,6 +63,24 @@ body::-webkit-scrollbar-thumb
     border-radius: 5px;
 }
 
+.warningWait
+{
+
+    width: 85%;
+    height: 10rem;
+    position: absolute;
+    background: var(--background-light);
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) skewY(20deg);
+    color: black;
+    font-size: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+
+}
 /* ---------------------- cod ----------------------   */
 main
 {
@@ -175,7 +193,7 @@ main
     top: 50%;
     opacity: 1;
     left: 0;
-    margin:0 2rem;
+    margin:0 1rem;
     transform: translateY(-50%);
     background: var(--background-light);
     border-radius: 20px;
@@ -369,9 +387,8 @@ main
     opacity: 1;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr 2fr 2fr 3fr;
-    right: 0;
     margin: 1rem ;
-    padding-left: 10rem;
+    padding: 0rem 1rem 0rem 7rem;
     gap: 1rem;
     z-index: var(--z_component);
 }
@@ -724,7 +741,6 @@ main
 }
 /* ---------------------- third-component ----------------------   */
 .cityComponent {
-    top: 0;
     width: 100%;
     height: 90%;
     position: absolute;
@@ -853,21 +869,30 @@ main
     height: 90%;
     position: absolute;
     display: none;
-    background: yellow;
+    padding: 0rem 1rem 0rem 7rem;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+
 }
 .mapComponent.active {
     display: grid;
+
 }
+
+
 /* ---------------------- fifth-component ----------------------   */
 .settingsComponent {
     width: 100%;
     height: 90%;
     position: absolute;
     display: none;
-    background: blue;
+    padding: 0rem 1rem 0rem 7rem;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
 }
 .settingsComponent.active {
     display: grid;
+
 }
 
 @keyframes slide-right {
@@ -940,26 +965,26 @@ main
     body
     {
 
-        height: 230vh;
+        height: 100vh;
     }
     main
     {
         width: 100vw;
-        max-height:230vh;
-        padding: 3rem 1rem;
-        height: auto;
+        max-height:100vh;
+        padding: 1rem;
+        align-items: flex-start;
+    
 
     }
     main.citiesHeight
     {
-        height: 110vh;
+        height: 100%;
+        max-height:100%;
     }
     body.citiesHeight
     {
-        height: 110vh;
+        height: 200vh;
     }
-    
-    
     
 /* ---------------------- Header ----------------------   */
 
@@ -989,8 +1014,6 @@ main
         flex-direction: row;
     }
   
-
-
 /* ------------ first-component ------------ */
     .left-size
     {
@@ -1011,8 +1034,7 @@ main
     .weatherComponent
     {
         width: 100%;
-        height: 100%;
-        top: 0;
+        height: calc(100% - 5rem);
         position: relative;
         grid-template-columns: 100%;
         grid-template-rows: .5fr 2.5fr 2fr 3fr 2.5fr ;
@@ -1162,20 +1184,19 @@ main
 /* ------------ third-component ------------ */
     .cityComponent
     {
-        padding-left: 2rem;
+        height: calc(100% - 5rem);
+        margin: 0;
+        padding: 1rem;
+        gap: .5rem;
+        
     }
-    .barToSearchCity {
-        padding-left: 1rems ;
+    .loadedCities
+    {
+        grid-template-columns: .8fr 3fr 1fr  1fr;
+    
     }
-    .loadedCities {
-        padding-left: 1rem;
-    }
-
-
-
-
-
-
+    
+    
 }  
 @media(max-width:576px){
     /* phones */
@@ -1206,7 +1227,10 @@ main
     }
 /* ------------ secund-component ------------ */
 
-
+    .weatherComponent
+    {
+        margin: 0;
+    }
     .weekforecast .clima img
     {
         width:auto;
@@ -1214,12 +1238,12 @@ main
     }
 /* ------------ third-component ------------ */
     .cityComponent {
-        grid-template-rows: 3rem 10rem  10rem  10rem  10rem;
-        height: 100vh;
+        grid-template-rows: 3rem 7rem  7rem  7rem  7rem;
+        margin: 0;
+        padding: 1rem;
     }
     .loadedCities {
         grid-template-columns: .6fr 1fr  1fr;
-        height: 10rem;
     }
     .forecastCitySearch {
         display: none;
@@ -1238,6 +1262,9 @@ main
         height: 30%;
     }
 /* ------------ third-component ------------ */
+    .barToSearchCity span  {
+        font-size: .8rem;
+    }
     .infoCitySearch .name {
 
         font-size: 1.5rem;

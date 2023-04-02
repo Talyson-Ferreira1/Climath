@@ -13,6 +13,7 @@ const mapComponent = document.querySelector(".mapComponent")
 const settingsComponent = document.querySelector(".settingsComponent")
 const childnodeListTabs = Array.from(navBar.childNodes).filter(card => card.tagName === "DIV");
 const btnSearchCity = document.querySelector(".btnSearch")
+const inputSeachCity = document.querySelector('.inputCitySearch');
 
 var nameCityData,
     AirUmidityData,
@@ -94,33 +95,40 @@ btnDeniedLocation.addEventListener('click', ()=>{
     toggleTab(InitScreen,weatherComponent,true)
 
 })
-phoneScreen.addEventListener('change', event => {
-    function removeTextBtnNav(){
-        if(event.matches){
-            weather.innerText ="";
-            cities.innerText ="";
-            map.innerText ="";
-            settings.innerText ="";
-        }else{
-            weather.innerText ="Weather";
-            cities.innerText ="Cities";
-            map.innerText ="Map";
-            settings.innerText ="Settings";
-        }
-
-    }
-    
-    function removeTextBtnStart(){
-        if (event.matches) {
-            btnStart.innerText = "";
-        } else {
-            btnStart.innerText = "Iniciar";
-        }
+inputSeachCity.addEventListener('keypress',(event)=>{
+    if (event.keyCode === 13){createNewcity()}
+})
+function removeTextBtnNav(){
+    if(phoneScreen.matches){
+        weather.innerText ="";
+        cities.innerText ="";
+        map.innerText ="";
+        settings.innerText ="";
+    }else{
+        weather.innerText ="Weather";
+        cities.innerText ="Cities";
+        map.innerText ="Map";
+        settings.innerText ="Settings";
     }
 
-    removeTextBtnStart()
-    removeTextBtnNav()
-    decreaseMainAndBody()
+}
+function removeTextBtnStart() {
+    if (phoneScreen.matches) {
+      btnStart.innerText = "";
+    } else {
+      btnStart.innerText = "Iniciar";
+    }
+}
+//ou init screen ativado
+
+removeTextBtnStart();
+removeTextBtnNav();
+increaseScreenSize();
+
+phoneScreen.addEventListener("change", () => {
+    removeTextBtnStart();
+    removeTextBtnNav();
+    increaseScreenSize();
 });
 childnodeListTabs.forEach((tab)=>{
     //Responsável pela troca de tabs
@@ -134,28 +142,25 @@ childnodeListTabs.forEach((tab)=>{
         newTab = tab.classList[1] 
 
         toggleTab(currentTab,newTab,showheader)
-        decreaseMainAndBody()
+        increaseScreenSize()
     })
     
 })
 
 //Resolver bug adicionandon uma condicionaçde tamanho
-function decreaseMainAndBody()  {   
+function increaseScreenSize()  {   
     let main = document.querySelector("main") 
     let body = document.querySelector("body") 
 
-    if(childnodeListTabs[1].classList.contains("active") ){
-
+    if(childnodeListTabs[0].classList.contains("active")){
         main.classList.add("citiesHeight")
         body.classList.add("citiesHeight")
     }else{
         main.classList.remove("citiesHeight")
         body.classList.remove("citiesHeight")
-
     }
+
 }
-
-
 function start() {
 
     Loader.style.display= "none"
@@ -170,7 +175,6 @@ function checkPermission() {
         longitude = position.coords.longitude;
         warning.style.display="none";
         toggleTab('InitScreen','weather',true);
-        
         makeRequisitionCity()
         makeRequisitionForecast()
         
@@ -206,6 +210,7 @@ function toggleTab(currentTab,newTab,showheader){
     switch (currentTab) {
         case 'InitScreen':
             currentTab = InitScreen;
+            childnodeListTabs[0].classList.add("active")
             break;
         case 'weather':
             currentTab = weatherComponent;
@@ -229,6 +234,7 @@ function toggleTab(currentTab,newTab,showheader){
             break;
         case 'weather':
             newTab = weatherComponent;
+            increaseScreenSize()
             break;
         case 'cities':
             newTab = cityComponent;
