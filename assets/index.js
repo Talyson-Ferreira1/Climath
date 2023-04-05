@@ -15,21 +15,6 @@ const childnodeListTabs = Array.from(navBar.childNodes).filter(card => card.tagN
 const btnSearchCity = document.querySelector(".btnSearch")
 const inputSeachCity = document.querySelector('.inputCitySearch');
 
-var nameCityData,
-    AirUmidityData,
-    temperatureData, 
-    thermalSensationData, 
-    windSpeedData, 
-    climate,
-    visibilityData,
-    latitude, 
-    longitude,
-    weather = navBar.children[1].children[1],
-    cities = navBar.children[2].children[1],
-    map = navBar.children[3].children[1],
-    settings =navBar.children[4].children[1];
-
-
 var forecastHours = {
     sixAm : "",
     nineAm: "",
@@ -86,42 +71,33 @@ var descricaoClimaPt = {
     "squalls": "rajadas de vento",  
     "tornado": "tornado",  
 };
+var nameCityData,
+    AirUmidityData,
+    temperatureData, 
+    thermalSensationData, 
+    windSpeedData, 
+    climate,
+    visibilityData,
+    latitude, 
+    longitude,
+    weather = navBar.children[1].children[1],
+    cities = navBar.children[2].children[1],
+    map = navBar.children[3].children[1],
+    settings =navBar.children[4].children[1];
+
 
 btnSearchCity.addEventListener('click',createNewcity)
 btnConfirmLocation.addEventListener('click', checkPermission)
 btnStart.addEventListener('click', showWarning)
 btnDeniedLocation.addEventListener('click', ()=>{
 
-    toggleTab(InitScreen,weatherComponent,true)
+    toggleTab('InitScreen','weather',true);
 
 })
 inputSeachCity.addEventListener('keypress',(event)=>{
     if (event.keyCode === 13){createNewcity()}
 
 })
-function removeTextBtnNav(){
-    if(phoneScreen.matches){
-        weather.innerText ="";
-        cities.innerText ="";
-        map.innerText ="";
-        settings.innerText ="";
-    }else{
-        weather.innerText ="Weather";
-        cities.innerText ="Cities";
-        map.innerText ="Map";
-        settings.innerText ="Settings";
-    }
-
-}
-function removeTextBtnStart() {
-    if (phoneScreen.matches) {
-      btnStart.innerText = "";
-    } else {
-      btnStart.innerText = "Iniciar";
-    }
-}
-
-
 phoneScreen.addEventListener("change", () => {
     removeTextBtnStart();
     removeTextBtnNav();
@@ -145,6 +121,27 @@ childnodeListTabs.forEach((tab)=>{
 })
 
 //Resolver bug adicionandon uma condicionaçde tamanho
+function removeTextBtnNav(){
+    if(phoneScreen.matches){
+        weather.innerText ="";
+        cities.innerText ="";
+        map.innerText ="";
+        settings.innerText ="";
+    }else{
+        weather.innerText ="Weather";
+        cities.innerText ="Cities";
+        map.innerText ="Map";
+        settings.innerText ="Settings";
+    }
+
+}
+function removeTextBtnStart() {
+    if (phoneScreen.matches) {
+      btnStart.innerText = "";
+    } else {
+      btnStart.innerText = "Iniciar";
+    }
+}
 function increaseScreenSize()  {   
     let main = document.querySelector("main") 
     let body = document.querySelector("body") 
@@ -1002,8 +999,6 @@ async function createNewcity(){
     inputSeachCity.blur();
     createCardCity()
 }   
-makeRequisitionTabCities()
-
 function erroNameCity(){
     let placeholder = document.querySelector(".barToSearchCity span ")
     let input = document.querySelector(".barToSearchCity")
@@ -1019,7 +1014,7 @@ function erroNameCity(){
     },1500)
 }
 
-
+makeRequisitionTabCities()
 removeTextBtnStart();
 removeTextBtnNav();
 increaseScreenSize();
